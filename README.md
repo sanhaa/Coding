@@ -1,2 +1,2 @@
-# Mybaekjoon
+# Coding practice
 My baekjoon solution

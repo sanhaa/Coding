@@ -1,4 +1,4 @@
-//10845��: ť
+//10845¹ø: Å¥
 #include <iostream>
 
 using namespace std;
@@ -20,7 +20,7 @@ void Push(int x) {
 }
 int Pop() {
 	if (Empty()) return -1;
-	//q.arr[q.front++] = 0; // pop�ؼ� �ʱ�ȭ 
+	//q.arr[q.front++] = 0; // popÇØ¼­ ÃÊ±âÈ­ 
 	q.front++;
 	return q.arr[q.front - 1];
 

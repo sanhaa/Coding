@@ -1,3 +1,13 @@
 # Coding practice
-백준, softwareexpert 문제 풀기
-필요한 알고리즘 
+### problem solving and algorithm study
+</br>
+
+### PS 
+  1. [Beakjoon](https://www.acmicpc.net/)
+  2. [SWexpert](https://swexpertacademy.com/main/main.do)
+</br>
+
+### Algorithm Study
+  - 1 BOJ a week
+  - 1 problem review a week
+  - Daily concept review and learning

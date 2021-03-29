@@ -47,7 +47,7 @@ int Qpeek() {
 	if (isEmpty())
 		cout << "Queue Underflow \n";
 	else
-		return q[(front+1)/QUEUE_SIZE];
+		return q[(front+1)%QUEUE_SIZE];
 }
 
 int main() {

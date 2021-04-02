@@ -6,13 +6,13 @@ using namespace std;
 
 const char sharp = '#';
 
-const int TREE_SIZE = 10000;
+const int TREE_SIZE = 10001; // 10001
 int Left[TREE_SIZE] = { 0, };
 int Right[TREE_SIZE] = { 0, };
 int Parent[TREE_SIZE] = { 0, };
 
 void print1() {
-		cout << "Left : ";
+	cout << "Left : ";
 	for (int i = 0; i < TREE_SIZE; i++) {
 		//if (Left[i] == 0) continue;
 		cout << Left[i] << " ";
@@ -21,7 +21,7 @@ void print1() {
 }
 
 void print2() {
-		cout << "Right : ";
+	cout << "Right : ";
 	for (int i = 0; i < TREE_SIZE; i++) {
 		//if (Right[i] == 0) continue;
 		cout << Right[i] << " ";
@@ -30,7 +30,7 @@ void print2() {
 }
 
 void print3() {
-		cout << "Parent : ";
+	cout << "Parent : ";
 	for (int i = 0; i < TREE_SIZE; i++) {
 		//if (Parent[i] == 0) continue;
 		cout << Parent[i] << " ";
@@ -38,26 +38,30 @@ void print3() {
 	cout << endl;
 }
 
-int get_level(int v) {
-	if (v < 1) return 0;
+int childs = 0;
 
-	int l = get_level(Left[v]);
-	int r = get_level(Right[v]);
-
-	if (l > r) return l + 1;
-	return r + 1;
+void preorder(int node, int count) {
+	if (node < 1 || node >= TREE_SIZE) return;
+	if (node == 0) return;
+	childs++;
+	//cout << node; // v
+	preorder(Left[node], count+1); // L
+	preorder(Right[node], count+1); // R
 }
 
 int main() {
+
 	freopen("input.txt", "r", stdin);
 
 	int T = 0;
 	cin >> T;
 
 	for (int t = 1; t <= T; t++) {
+		// 테케 반복 초기화
 		fill_n(Left, TREE_SIZE, 0);
 		fill_n(Right, TREE_SIZE, 0);
 		fill_n(Parent, TREE_SIZE, 0);
+		childs = 0;
 
 		int V, E, v1, v2;
 		cin >> V >> E >> v1 >> v2;
@@ -74,41 +78,27 @@ int main() {
 
 			if (Left[parent] == 0) // 왼쪽 자식이 아직 없으면
 				Left[parent] = child;
-			else 
+			else
 				Right[parent] = child;
 
 			Parent[child] = parent;
 		}
 
-		cout << get_level(v1) << endl;
-
 		//print1();
 		//print2();
 		//print3();
 
-		// LCA 어떻게 찾지
-	//	vector<int> pp1;
-	//	vector<int> pp2;
-	//	int p1 = v1; // 5
-	//	int p2 = v2; // 6
-
-	//	int LCA = p1;
-
-	//	pp1.push_back(p1);
-	//	pp2.push_back(p2);
-
-	//	while (p1 != p2 && p1>=1 && p2>=1) {
-	//		p1 = Parent[p1];
-	//		p2 = Parent[p2];
-	//		pp1.push_back(p1);
-	//		pp2.push_back(p2);
-	//	}
-
-	//	for (int i = 0; i < pp1.size(); i++) {
-	//		for (int j = 0; j < pp2.size(); j++) {
-	//			if (pp1[i] == pp2[j]) LCA = pp1[i];
-	//		}
-	//	}
-	//	cout << sharp<<t<<" "<< LCA << endl;
+		// LCA 찾기
+		bool visit[TREE_SIZE] = { 0, };
+		while (v1 != 0) {
+			visit[v1] = 1;
+			v1 = Parent[v1];
+		}
+		while (!visit[v2]) {
+			v2 = Parent[v2];
+		}
+		// subtree 크기, 자식노드 개수 찾기
+		preorder(v2, 0);
+		cout << sharp<<t<<" "<< v2 <<" "<<childs<< endl;
 	}
 }

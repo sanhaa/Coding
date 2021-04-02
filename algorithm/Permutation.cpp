@@ -26,14 +26,7 @@ void perm_recursive(int k, int n) {
 		}
 	}
 }
-
-int my_perm(int n, int r, int q) {
-	if (n == 1 && r == 1) {
-		return 1;
-	}
-	int ret = n* my_perm(n-1, r-1, q-1);
-}
-
+ 
 //nPr
 void nPr(int n, int r, int q) {
 	if (r==0) {

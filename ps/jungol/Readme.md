@@ -14,4 +14,4 @@
   - [X] [1141](http://jungol.co.kr/bbs/board.php?bo_table=pbank&wr_id=421&sca=3020)
   - [ ] [1733:오목 (Accept 89)](http://jungol.co.kr/bbs/board.php?bo_table=pbank&wr_id=1006&sca=2060)
   - [ ] [2194:요거트공장](http://jungol.co.kr/bbs/board.php?bo_table=pbank&wr_id=1454&sca=99&sfl=wr_hit&stx=2194)
-  - [ ] 1840
+  - [X] 1840

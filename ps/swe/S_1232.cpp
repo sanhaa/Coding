@@ -4,6 +4,7 @@ using namespace std;
 const int TREE_SIZE = 1001;
 const char sharp = '#';
 
+// make struct
 int Tree[TREE_SIZE] = { 0, };
 int Left[TREE_SIZE] = { 0, };
 int Right[TREE_SIZE] = { 0, };
@@ -24,6 +25,7 @@ void print_tree() {
 }
 
 // 후위 순회로 계산하기
+// 어짜피 L R 순회다음에 left right 자식 참조하니까 double 형으로 계산 결과 반환하도록?
 void post_order(int node) {
 	if (node < 1 || node > N) return;
 	if (Tree[node] == 0 || Left[node] == 0 || Right[node] == 0) return; // 어떤 노드에 data가 없으면
@@ -32,18 +34,18 @@ void post_order(int node) {
 	post_order(Right[node]); // 오른쪽 자식 순회
 	//printf("%d ", Tree[node]);
 
-	if (Tree[node] < 48) {
-		int l = Tree[Left[node]];
+	if (Tree[node] < 48) { // 현재 노드의 데이터가 연산자이면
+		int l = Tree[Left[node]]; // 어짜피 참조하는 부분
 		int r = Tree[Right[node]];
 
 		switch (Tree[node]) {
-		case 43:
+		case '+':
 			Tree[node] = l + r; break;
-		case 45:
+		case '-':
 			Tree[node] = l - r; break;
-		case 47:
+		case '/':
 			Tree[node] = l / r; break;
-		case 42:
+		case '*':
 			Tree[node] = l * r; break;
 		}
 	}
@@ -63,7 +65,7 @@ int main() {
 
 		for (int k = 0; k < N; k++) {
 			int n = 0;
-			char data[TREE_SIZE] = { 0, };
+			char data[TREE_SIZE] = { 0, }; // string 쓰는게 낫나?
 
 			scanf("%d %s", &n, data);
 			// 노드 데이터의 첫값으로 연산자와 숫자를 구분

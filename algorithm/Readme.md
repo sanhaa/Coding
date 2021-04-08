@@ -1,12 +1,38 @@
-## 알고리즘 정리
+## Algorithm
 
-#### 할 일
-  - [ ] Linked List 구현
-  - [ ] 자료구조 / 알고리즘 / Tip 정리
+### Algorithm List
+  1. Combination & Permutation
+      - [X] Combination
+      - [X] Permutation
+  2. Graph
+      - [X] Binary_Search
+      - [X] Dijkstra - Dijkstra_input.txt
+      - [X] Dijkstra with heap
+      - [X] Graph Search (DFS, BFS) - Graph_input.txt
+      - [X] Minimum Spanning Tree
+  4. Basic Data Structure
+      - [X] Stack
+      - [X] Queue
+      - [X] Circular_Queue
+      - [ ] Linked List
+  5. Tree
+      - [X] Binary Search Tree
+      - [X] Heap
+      - [ ] Segment Tree
+      - [ ] Tree Search
+      - [ ] ~AVL, RB Tree~
+  6. Sort
+      - [ ] Quick Sort
+  7. String
+      - [ ] Karp Rabin
+      - [ ] KMP
+      - [ ] Trie
+
 
 <br>
 
-#### 까먹지 말 것
-1. 무작정 코드부터 쓰지 말기, 제약조건 정리하고 생각먼저 하고 코딩하기
-2. 일단 정답코드 작성하고 이후에 최적화 (처음부터 최적화 생각하지 말아라)
-3. 디버깅할 때 도저히 틀린 곳이 안보이면 명상 5-10분하고 다시 보기
+### Note
+1. 제약조건 정리
+2. 필기랑 생각을 먼저
+3. 서브 최적화는 나중에
+4. 디버깅할 때 주석달면서 흐름 보기, 그래도 안보이면 명상 5-10분

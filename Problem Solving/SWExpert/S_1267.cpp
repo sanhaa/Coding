@@ -1,5 +1,5 @@
-// S 1267 작업 순서
-// 위상정렬 사용
+// S 1267 작업순서
+// 위상정렬 사용, 진입 차수 감소 순서를 
 #include <iostream>
 using namespace std;
 
@@ -26,25 +26,20 @@ void topological_sort(int A[MAX_V][MAX_V], int V) {
 		}
 	}
 
-	//int i = 0;
 	while(front != rear){
-		//i++;
 		int i = q[++front]; // dequeue
 		A[0][i]--; // 진입차수 -1
 		cout << i << " ";
 
 		for (int j = 1; j <= V; j++) {
-			if (A[i][j] == 1) { // i->j 길이 있다
-				A[0][j]--;
-				if(A[0][j] == 0) // 진입차수가 0이면
-					q[++rear] = j; // enqueue
+			if (A[i][j] == 1 && --A[0][j] == 0) { // i->j 길이 있다
+				q[++rear] = j; // enqueue
 			}
 		}
 	}
 }
 
 int main() {
-	freopen("input.txt", "r", stdin);
 
 	int T = 10;
 	for (int t = 1; t <= T; t++) {

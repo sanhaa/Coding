@@ -1,5 +1,5 @@
-// 다익스트라 heap으로 구현
-// heap 대신 pq 써도 된다.
+// 다익스트라 PQ 사용해 구현
+// PQ 구현은 heap으로 
 #include <iostream>
 using namespace std;
 

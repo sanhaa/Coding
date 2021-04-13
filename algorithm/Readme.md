@@ -9,7 +9,7 @@
       - [X] Dijkstra - Dijkstra_input.txt
       - [X] Dijkstra with heap
       - [X] Graph Search (DFS, BFS) - Graph_input.txt
-      - [X] Minimum Spanning Tree
+      - [X] Minimum Spanning Tree -> `인접리스트 사용하기(BOJ)`
   4. Basic Data Structure
       - [X] Stack
       - [X] Queue
@@ -23,7 +23,10 @@
       - [ ] ~AVL, RB Tree~
   6. Sort
       - [ ] Quick Sort
-  7. String
+  7. DP
+      - [ ] Ex. fibonacci (sliding window)
+      - [ ] ~Ex. knapsack(PS)~
+  9. String
       - [ ] Karp Rabin
       - [ ] KMP
       - [ ] Trie

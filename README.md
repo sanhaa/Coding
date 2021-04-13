@@ -1,10 +1,15 @@
 # Coding practice
-##### problem solving and algorithm study
+#### problem solving and algorithm study
 
 ****
 
+#### 할 일
+  + 플로이드 워셜 알고리즘 VS. 다익스트라 n번 반복
+  + DP 관련 문제 풀기 (양팔저울 https://www.acmicpc.net/problem/2629)
+  + 백트래킹 
+
 #### 유용한 사이트
-- https://visualgo.net/ko
+- 알고리즘 시각화 : https://visualgo.net/ko
 
 
 #### PS 

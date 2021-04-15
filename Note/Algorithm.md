@@ -1,6 +1,7 @@
 ## MEMO 
 ---
 #### **다익스트라 알고리즘에서 음수 간선이 존재하면 안되는 이유**
+` 가장 큰 이유는 음수 간선이 있으면 다익스트라 알고리즘 자체가 작동하지 않는다는 것`
 <details>
 <summary> 자세히 보기 </summary>
 <div>       
@@ -22,6 +23,37 @@
   + 벨만 포드 등
 
 (참고 자료 : https://hy38.github.io/why-dijkstra-fail-on-a-negative-weighted-edge)
+
+</div>
+</details>
+
+---
+#### **최단경로 VS. 최소신장트리(MST) VS. 모든쌍최단경로**
+`그래프에서 최소 가중치(경로)를 찾는 문제이지만 목적의 차이`
+<details>
+<summary> 자세히 보기 </summary>
+<div>       
+
+#### 1. 공통점
+  + 가중치가 있는 그래프에서 사용한다.
+  + 가중치(또는 경로)가 제일 작은 값을 구한다.
+
+#### 2. 목적의 차이
+  + 최단 경로 : 그래프에서 두 정점 사이의 최단 경로 구하기 ( 모든 정점을 체크해야 하지만 모든 정점을 방문할 필요는 없다. )
+  + 최소신장트리 : 그래프에서 모든 정점을 연결할 때 최소 가중치 구하기 ( 모든 정점을 체크해야하고 모든 정점을 방문해야 한다. )
+  + 모든 쌍 최단 경로 : 모든 두 정점 사이의 최단 경로 구하기 ( 모든 정점을 여러번 체크해야 하고 모든 정점을 여러번 방문해야 한다. ) 
+
+
+#### 3. 방법(알고리즘)의 차이
+  + 최단 경로 : `BFS`, `Dijkstra`, `Bellman-Ford`
+  + 최소신장트리 : `Prim`, `Kruskal`
+  + 모든 쌍 최단 경로 : `Floyd-Warshall Algorithm(DP)`, `Dijkstra(출발정점 바꿔가며 반복)`
+
+#### 4. 최단 경로 유형
+  + single source and single destination shortest path problem `A*`
+  + single source shortest path problem `Dijkstra`
+  + All pairs shortest path problem `Floyd`
+  + 최소 신장 트리는 최단 경로 문제가 아니다
 
 </div>
 </details>

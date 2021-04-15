@@ -23,3 +23,31 @@
 
 </div>
 </details>
+
+---  
+
+#### Bitmask를 활용한 속도 향상
+<details>
+<summary> 자세히 보기 </summary>
+<div>       
+
+#### 1. 그래프 탐색 문제에서 이미 방문했거나 방문 해야하는 정점을 기록할 때 사용
+  + `bool visit[N]` 해도 되지만 `int visit =1` bit 연산이 훨씬 빠르다
+  + 보통 `DP[N][1<<N]` 으로 방문 정보를 DP 테이블에 함께 기록
+
+#### 2. Bitmask 최대 크기
+  + 그래프 정점 N이 크지 않을 때
+  + `int visit` int 형으로 선언하면 4바이트의 자릿수인 32(bit) 개의 정점까지 기록 가능
+  + ~근데 bitmask를 사용해야 하는 문제에서는 (ex. TSP) 보통 N < 20? 그 이상 넘어가면 시간이 엄청 오래걸려서~ 
+
+#### 3. 기억해야 할 Bit 연산
+  1) i'th bit on/off
+    - on: `n | (1<<i)`
+    - of: `n & ~(1<<i)`
+  3) all bit on
+    - `1<<n - 1`
+  5) check if power of 2 
+    - n == (n & -n)
+
+</div>
+</details>

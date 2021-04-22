@@ -59,4 +59,25 @@
 </details>
 
 ---
+#### **DFS VS. BFS VS. Backtracking**
+`그래프를 탐색하는 알고리즘, 목적의 차이`
+<details>
+<summary> 자세히 보기 </summary>
+<div>       
 
+#### 1. 공통점
+  + 그래프(트리)를 탐색할 때 사용한다.
+
+#### 2. 목적의 차이
+  + DFS / BFS : 말그대로 탐색 알고리즘으로 모든 노드를 방문해야 한다.
+  + Backtracking: 문제 조건에 부합하는 답을 찾는 알고리즘으로 유망한 노드만 방문하면 된다. (답이 아니면 되돌아 온다)
+
+#### 3. 구현
+  + DFS: 깊이우선탐색, `stack` 이용, or `재귀`
+  + BFS: 너비우선탐색, `queue` 이용 or `반복문`
+  + Backtracking: `재귀 + 가지치기(pruning)` or `stack`
+
+</div>
+</details>
+
+---

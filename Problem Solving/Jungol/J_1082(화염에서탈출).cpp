@@ -1,13 +1,14 @@
 /*
 2021-04-26
 J_1082: 화염에서탈출
-알고리즘: BFS
+알고리즘: BFS + queue 구현
 */
 #include <iostream>
-#include <queue>
+//#include <queue>
 using namespace std;
 
 #define MAX_SIZE 55
+#define MAX_ARR 5000
 #define INF 987654321
 
 struct POS {
@@ -22,10 +23,6 @@ struct POS {
 	POS(int r, int c, int m) {
 		row = r; col = c; minute = m;
 	}
-
-	bool operator == (POS p) {
-		return (row == p.row && col == p.col);
-	}
 };
 
 int dr[4] = { -1, 1, 0, 0 };
@@ -33,37 +30,26 @@ int dc[4] = { 0, 0, -1, 1 };
 
 int R = 0, C = 0;
 char map[MAX_SIZE][MAX_SIZE] = { 0, };
-POS s_pos, d_pos;
-POS fires[2500]; int fi = 0;
-int fires_idx[2500] = { 0, };
+POS s_pos;
+POS fires[MAX_ARR]; int fi = 0;
 
 int MIN(int a, int b) {
 	return a < b ? a : b;
 }
 
-void print_map() {
-	cout << "--------" << endl;
-	for (int i = 0; i < R; i++) {
-		for (int j = 0; j < C; j++) {
-			cout << map[i][j];
-		}
-		cout << endl;
-	}
-	cout << endl;
-}
-
 int BFS() {
 	int ret = INF;
-	queue<POS> q;
-	q.push(s_pos);
+	//queue<POS> q;
+	//q.push(s_pos);
+	POS q[MAX_ARR];
+	int front = -1, rear = -1;
+	q[++rear] = s_pos;
 
 	int prev_m = -1;
 
-	while (!q.empty()) {
-		POS now = q.front(); q.pop();
-		// for check
-		//cout << "minute : " << prev_m << " " << now.minute << endl;
-		//cout << now.row << " " << now.col << " " << endl;
+	while (/*!q.empty()*/front != rear) {
+		//POS now = q.front(); q.pop();
+		POS now = q[++front];
 
 		if (map[now.row][now.col] == 'D') {	 // 종료 조건
 			ret = MIN(ret, now.minute);
@@ -72,13 +58,11 @@ int BFS() {
 		if (map[now.row][now.col] != '.') {
 			continue;
 		}
-		//map[now.row][now.col] = 'S'; // 방문 처리
-		//print_map();
 
 		map[now.row][now.col] = ','; // 방문 처리
 
 		// 불 옮기기
-		if (prev_m != now.minute) {
+		if (prev_m != now.minute) { // 이전과 레벨이 같으면 불 위치가 같다.
 			int fires_count = fi;
 			for (int i = 0; i < fires_count; i++) {
 				POS fire_now = fires[i];
@@ -103,7 +87,8 @@ int BFS() {
 			if (nr < 0 || nr >= R || nc < 0 || nc >= C) continue;
 
 			if (map[nr][nc] == '.' || map[nr][nc] == 'D') {
-				q.push(POS(nr, nc, now.minute + 1));
+				//q.push(POS(nr, nc, now.minute + 1));
+				q[++rear] = POS(nr, nc, now.minute + 1);
 			}
 		}
 
@@ -125,11 +110,7 @@ int main() {
 				map[i][j] = '.';
 				s_pos = POS(i, j);
 			}
-			else if (map[i][j] == 'D') {
-				d_pos = POS(i, j);
-			}
 			else if (map[i][j] == '*') {
-				fires_idx[0]++;
 				fires[fi++] = POS(i, j);
 			}
 		}

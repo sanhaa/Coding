@@ -6,6 +6,12 @@ https://cafe.naver.com/cozal
 #### 입력 관련
   1. scanf로 문자 입력 받을 때 줄바꿈은 무시할 수 있도록 
 
+-----
+
+#### 자료구조 관련
+  1. `struct{static int a}`, `global int a` 시간적인 성능은 거의 같다
+
+
 --- 
 
 #### 그래프 관련  

@@ -1,14 +1,17 @@
+
 /*
 2021-05-03
 기출문제 : 개미탈출
 시뮬레이션, 자료구조
+
+- 동시 탈출 처리
+- 충돌 판단 개선
+- 방향4에 대해서만 검사 (방4 x좌표로 정렬해서 기준으로 움직이다가 충돌 고려해서 기준 변경)
 */
 #include <iostream>
 #include <map>
 
 using namespace std;
-
-typedef pair<int, int> PII;
 
 enum DIR {
 	UP = 1, DOWN, LEFT, RIGHT
@@ -19,10 +22,28 @@ int dy[5] = { 0, 1, -1, 0, 0 };
 
 const int MAX_N = 5010;
 int M, N, K;
-int ans_sec, ans_num;
 int out_cnt; // 탈출한 개미 수
+int active_cnt; // 움직일 수 있는 개미 수
+
+struct ANSWER {
+	int sec = 0;
+	int num = 0; // 개미 번호
+	
+}answer;
+
+struct ANT {
+	int idx = 0;
+	int x = 0;
+	int y = 0;
+	int dir = 0; // 방향 1 ~ 4
+	bool active = 0; // 움직일 필요가 있는 개미면 1
+	int sec = 0; // ?
+};
 
 int main() {
+
+	freopen("input.txt", "r", stdin);
+
 	int tc = 0; scanf("%d", &tc);
 
 	/*  test case 반복  */
@@ -30,65 +51,62 @@ int main() {
 
 		// 변수 초기화
 		M = 0; N = 0; K = 0;
-		ans_sec = 0; ans_num = 0; out_cnt = 0;
+		answer.sec = 0; answer.num = 0; out_cnt = 0; active_cnt = N;
 
-		// key : pair(x, y)
-		// value : pair(idx, dir)
-		// 묶어서 구조체 선언해도 되지만 충돌 여부 판단을 빠르게 하기 위해 key 값 설정
-		map<PII, PII> m; 
+		ANT ant[MAX_N];
+		map<int, map<int, ANT>> m;
 
 		/*  input  */
 		scanf("%d %d %d", &M, &N, &K);
 		for (int i = 1; i <= N; i++) { // 1 ~ N 사용
-			int x, y, dir;
-			cin >> x >> y >> dir;
-			m.insert(make_pair(x, y), make_pair(i, dir));
+			cin >> ant[i].x >> ant[i].y >> ant[i].dir;
 		}
 
-		while (out_cnt <= K) {
-			ans_sec++;
+		while (out_cnt <= K && active_cnt>=0) {
+			m.clear();
+			// 개미 1 ~ N 까지 MOVE
+			for (int i = 1; i <= N; i++) {
+				cout << i << " th move : " << ant[i].x << " " << ant[i].y << endl;
 
-			for (auto iter = m.begin(); iter != m.end(); iter++) {
+				if (ant[i].active == 0) continue;
+
 				// MOVE
-				int dir = (*iter).second.second;
-				int x = m.at((*iter).first).first + dx[dir]; // new x
-				int y = m.at((*iter).first).second + dy[dir];
-				int idx = (*iter).second.first;
-				m.erase((*iter).first); // key는 변경 못하니까 지우고 다시 만들어야 하는데 이게 맞나
+				ant[i].x += dx[ant[i].dir];
+				ant[i].y += dy[ant[i].dir];
 
-				if (m.size() == 0) break;
-
-				if (x == M) {
-					// 탈출
-					out_cnt++;
-					// 동시에 탈출한 개미 있으면 그 중에 y좌표 낮은 걸로 출력
-					if (out_cnt == K) {
-						ans_num = idx; 
+				// 탈출 여부
+				if (ant[i].x >= M) {
+					ant[i].active = 0; active_cnt--;
+					
+					if (out_cnt == K && answer.sec == ant[i].sec ) {
+						// 동시 탈출 처리
+						if (ant[answer.num].y > ant[i].y) {
+							answer.num = i; // y값이 더 작으면 num update
+						}
+						
 					}
-					continue;
+					else {
+						out_cnt++; 
+					}
 				}
-				if (x >= M || y >= M || x <= 0 || y <= 0) {
-					// 범위 벗어나면
-					continue;
-				}
-
-				// 새로운 위치, 업데이트 된 방향(필요시)으로 ant insert
-				PII new_xy = make_pair(x, y);
-				int new_dir = 0;
-				// 새로 움직인 위치에서 충돌이 발생하는지?
-				auto it = m.find(new_xy);
-				if (it != m.end()) {
-					// 충돌발생, 방향 수정
-					new_dir = (*it).second.second;
-					(*it).second.second = dir;
+				// map 범위 체크
+				else if (ant[i].x >= M || ant[i].y >= M || ant[i].x <= 0 || ant[i].y <= 0) {
+					ant[i].active = 0; active_cnt--;
 				}
 
-				m.insert(new_xy, make_pair(idx, new_dir));
+				// 충돌 체크 및 처리
+				auto iterx = m.find(ant[i].x);
+				auto itery = m.at(ant[i].x).find(ant[i].y);
+				if (iterx != m.end() && itery != m.at(ant[i].y).end()) { // 충돌 발생
+					// 충돌 처리, dir swap
+					int tmp = ant[i].dir;
+					ant[i].dir = (*itery).second.dir;
+					m.at(ant[i].x).at(ant[i].y).dir = tmp;
+				}
 			}
-
 		}
 
-		printf("#%d %d %d\n", t + 1, ans_sec, ans_num);
+		printf("#%d %d %d\n", t + 1, answer.sec, answer.num);
 	}
 
 	return 0;

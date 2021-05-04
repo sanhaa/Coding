@@ -10,7 +10,13 @@ https://cafe.naver.com/cozal
 
 #### 자료구조 관련
   1. `struct{static int a}`, `global int a` 시간적인 성능은 거의 같다
-
+  2. 0 ~ M 숫자를 2차원 좌표 x, y로 나타낼 때 보통 `x = (num-1)/3 + 1; y = (num-1)%3 + 1` 등으로 연산하는데, M의 수가 적을 경우
+      ```
+      pair<int, int> xy = { {0, 0}, {0, 1}, {0, 2} ... };
+      pair<int, int> a = xy[m];
+      ```  
+      
+      위와 같이 나타낼 수 있다. (단, 인덱스를 주의 할 것)
 
 --- 
 

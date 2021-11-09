@@ -25,3 +25,8 @@
    - Brute Force
    - Not flip every time --> (i+j) even or odd decides 'B' or 'W'
    - **(Important) # of blocks when start with 'W' = 8x8(MAX_CNT) - starts with 'B'**
+
+- [ ] [1029(수 찾기)]
+  - quick sort 구현: 메모리 초과
+  - sort() STL 사용: 시간 초과
+  - 뭐 어케 해야함..

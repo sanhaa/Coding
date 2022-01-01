@@ -3,7 +3,7 @@
 
 ****
 
-#### [C++] FOR 등을 활용한 반복 입출력에서 시간 줄이기
+#### [C++] FOR 등을 활용한 반복 입출력에서 시간 줄이기 [참고](https://www.acmicpc.net/board/view/22716)
 ```
 cin.tie(NULL);
 ios_base::sync_with_stdio(false);

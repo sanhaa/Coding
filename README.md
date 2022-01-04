@@ -3,6 +3,17 @@
 
 ****
 
+#### [C++] FOR 등을 활용한 반복 입출력에서 시간 줄이기 [참고](https://www.acmicpc.net/board/view/22716)
+```
+cin.tie(NULL);
+ios_base::sync_with_stdio(false);
+cout<<"\n"; // instead of 'endl'
+```
+1. ```cin.tie(NULL)``` cin과 cout의 묶음을 제거, cin으로 입력 받을 때 먼저 출력 버퍼를 비우는데, 온라인 저지에서는 그럴 필요 없다. 
+2. ```ios_base::sync_with_stdio(false)```는 C와 C++의 버퍼를 분리, cin/cout과 stdin/stdout 싱크를 맞추지 않아서 속도가 빨라짐 (따라서 C/C++ 입출력 함수 혼용 불가)
+3. ```endl```은 개행 문자 출력 + 출력 버퍼 비움 (버퍼를 비우는 작업은 굉장히 느리다.) 그냥 \n 쓰자
+
+
 #### 도저히 틀린 이유를 모르겠을 때
   + 문제 다시 정독하면서 모든 조건에 대해 의심하기
   + 이해했다고 생각하는 것을 예시, 그림으로 다시 그려보기

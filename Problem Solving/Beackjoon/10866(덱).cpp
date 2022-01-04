@@ -24,29 +24,32 @@ void push_back(int x){
     deque[--tail] = x;
 }
 void front(){
-    if(empty()) cout<<"-1"<<endl;
-    else cout<<deque[head]<<endl;
+    if(empty()) cout<<"-1\n";
+    else cout<<deque[head]<<"\n";
 }
 void back(){
-    if(empty()) cout<<"-1"<<endl;
-    else cout<<deque[tail]<<endl;
+    if(empty()) cout<<"-1\n";
+    else cout<<deque[tail]<<"\n";
 }
 void pop_front(){
-    if(empty()) cout<<"-1"<<endl;
+    if(empty()) cout<<"-1\n";
     else {
-        cout<<deque[head]<<endl;
+        cout<<deque[head]<<"\n";
         deque[head] = 0; head--;
     }
 }
 void pop_back(){
-    if(empty()) cout<<"-1"<<endl;
+    if(empty()) cout<<"-1\n";
     else {
-        cout<<deque[tail]<<endl;
+        cout<<deque[tail]<<"\n";
         deque[tail] = 0; tail++;
     }
 }
 
 int main(){
+    cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    
     cin >> N;
     for(int i =0; i<N;i++){
         string op = "";
@@ -64,8 +67,7 @@ int main(){
         else if(op == "size") cout<<size()<<endl;
         else if (op == "empty") cout<<empty()<<endl;
         else if(op == "front") front();
-        else if(op=="back") back();
-        else cout<<"except\n";
+        else if(op == "back") back();
     }
 
     return 0;

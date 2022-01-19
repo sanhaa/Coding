@@ -1,41 +1,28 @@
 # # BOJ 1874 스택 수열
+import sys
 
 def main():
     n = int(input())
-    arr, st = [], []
-    ans = []
+    arr = [int(sys.stdin.readline()) for _ in range(n)]
+    st, ans = [], []
 
-    for i in range(n):
-        a = int(input())
-        arr.append(a)
-
-    num = 1
-    flag = True
+    num = 1 # 오름차순으로 push 될 번호
     for a in arr:
-        if flag==False: 
-            break
-
-        if len(st) == 0: #empty
-            st.append(num); num+=1 
-            ans.append('+') # push
-
-        while st[-1] < a:
+        while num <= a:
             st.append(num); num+=1
             ans.append('+') # push
             if num > n:
-                break # IMPOSSIBLE
+                break
                 
-        if st[-1] == a:
-            st.pop()
-            ans.append('-') # pop
-        else:
-            flag=False; break
+        if st[-1] != a:
+            ans = ['NO']; break
 
-    if flag == False:
-        print("NO")
-    else:
-        for a in ans:
-            print(a)
+        st.pop()
+        ans.append('-') # pop
+
+    # print answer
+    for a in ans:
+        print(a)
 
 
 if __name__ == '__main__':

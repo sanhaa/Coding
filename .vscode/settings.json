@@ -8,6 +8,12 @@
         "xhash": "cpp",
         "xstring": "cpp",
         "xtree": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "string": "cpp",
+        "utility": "cpp",
+        "xutility": "cpp",
+        "system_error": "cpp",
+        "xlocale": "cpp",
+        "iostream": "cpp"
     }
 }

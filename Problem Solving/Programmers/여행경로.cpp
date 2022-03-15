@@ -34,7 +34,6 @@ vector<string> solution(vector<vector<string>> tickets) {
             // cout<<n<<" > ";
             st.push_back(n);
         }
-        cout<<" |" <<endl;
     }
 
     return answer;

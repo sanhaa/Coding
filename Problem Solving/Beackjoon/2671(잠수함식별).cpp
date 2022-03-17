@@ -1,3 +1,8 @@
+// BOJ 2671 잠수함식별
+// DFA (Finite Automata) 라는데
+// 그냥 sub string 1, 2로 구분하고 part 구분해서 풀었다.
+// 반복문 한 번만 돌려고 하다 보니까 인덱스를 + 했다가 -하는 부분이 헷갈렸음
+// 그냥 이중 반복문으로 하는게 코드도 짧고 더 좋을 듯
 #include <iostream>
 #include <string>
 #include <vector>

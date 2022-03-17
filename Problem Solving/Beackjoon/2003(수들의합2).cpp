@@ -7,21 +7,21 @@ const int MAXN = 10010;
 int main(){
     int N = 0, M = 0, ans = 0;
     cin >> N >> M;
-    int A[MAXN] = {0,}, SUM[MAXN] = {0,};
+    int A[MAXN] = {0,};
 
     for(int x = 0; x<N;x++){
-        cin>>A[x+1];
-        SUM[x+1] = SUM[x] + A[x+1];
+        cin>>A[x];
     }
-    
-    for(int i = 1;i<=N;i++){
-        for(int j = i;j<=N;j++){
-            // sum A[i] ~ A[j]
-            if(SUM[j] - SUM[i-1] == M) ans++;
+    int start=0, end = 0, sum = 0;
+    for(start;start<N;start++){
+        while(sum < M && end < N){
+            sum += A[end];
+            end++;
         }
+        if(sum == M) ans++;
+        sum -= A[start];
     }
 
     cout<<ans<<endl;
-
     return 0;
 }

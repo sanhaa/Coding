@@ -1,7 +1,6 @@
 // BOJ 1747 소수&팰린드롬
 
 #include <iostream>
-#include <string>
 
 using namespace std;
 
@@ -12,7 +11,7 @@ int main(){
 
     int N = 0; cin>>N; // <= 100만
     int M = N;
-    while(true){
+    while(M>1){
         int temp = M;
         bool is_palin = true, is_prime = true;
         
@@ -29,19 +28,13 @@ int main(){
         
         if(is_palin) {
             // 2. 소수 판단
-            int div = 2;
-            while(M > div){
-                if(M%div==0) {
-                    is_prime = false;
-                    break;
-                }
-                div++;
-            }
-            if(M!=1 && is_prime)  // 소수
+            int div = 1;
+            while(M%(++div)!=0) {}
+            if(M==div)  // 소수
                 break;   
         }
         M++;
     }
-    cout<<M<<endl;
+    cout<<(M==1?2:M)<<endl;
     return 0;
 }

@@ -1,10 +1,9 @@
 // BOJ 1697 숨바꼭질
 #include <iostream>
-#include <vector>
 using namespace std;
 
 const int MAXN = 100000; 
-//pair<int, int> q[MAXN*10];
+pair<int, int> q[MAXN*10];
 
 int main() {
     cin.tie(NULL);
@@ -13,17 +12,14 @@ int main() {
 
     int N = 0, K = 0;
     cin >> N >> K;
-    //int front=-1, back = -1;
-    vector<pair<int, int> > q;
+    int front=-1, rear = -1;
     bool visit[MAXN+10] = { false, };
 
-    //q[++back] = make_pair(N, 0); // push
-    q.push_back(make_pair(N, 0));
+    q[++rear] = make_pair(N, 0); // push
     visit[N] = true;
 
-    while (!q.empty()) {
-        //pair<int, int> cur = q[++front]; // pop
-        pair<int, int> cur = q.front(); q.erase(q.begin());
+    while (front < rear) {
+        pair<int, int> cur = q[++front]; // pop
 
         if (cur.first == K) {
             cout << cur.second << "\n";
@@ -31,15 +27,15 @@ int main() {
         }
         if (cur.first + 1 <= MAXN && cur.first < K && !visit[cur.first + 1]) {
             visit[cur.first + 1] = true;
-            q.push_back(make_pair(cur.first + 1, cur.second + 1));
+            q[++rear] = (make_pair(cur.first + 1, cur.second + 1)); // push
         }
         if (cur.first - 1 >= 0 && !visit[cur.first - 1]) {
             visit[cur.first - 1] = true;
-            q.push_back(make_pair(cur.first - 1, cur.second + 1));
+            q[++rear] = (make_pair(cur.first - 1, cur.second + 1)); // push
         }
         if (cur.first<<1 <= MAXN && !visit[cur.first << 1]) {
             visit[cur.first * 2] = true;
-            q.push_back(make_pair(cur.first<<1, cur.second + 1));
+            q[++rear] = (make_pair(cur.first<<1, cur.second + 1)); // push
         }
     }
 

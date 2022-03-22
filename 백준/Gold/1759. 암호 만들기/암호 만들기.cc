@@ -18,7 +18,7 @@ void backtrack(int idx, int len, char* pwd) {
 		}
 		if (v < 1 || (len - v) < 2) return;
 		// 정답 출력
-		cout << pwd << endl;
+		cout << pwd << "\n";
 		return;
 	}
 	// idx >= C ??

@@ -75,7 +75,7 @@
 #### 3. 구현
   + DFS: 깊이우선탐색, `stack` 이용, or `재귀`
   + BFS: 너비우선탐색, `queue` 이용 or `반복문`
-  + Backtracking: `재귀 + 가지치기(pruning)` or `stack`
+  + Backtracking: `재귀 + 가지치기(prunning)` or `stack`
 
 </div>
 </details>

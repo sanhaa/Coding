@@ -31,3 +31,27 @@ https://cafe.naver.com/cozal
   2. DP 테이블 정의 + 점화식 정의 만 하면 된다. (말은 쉽지ㅠㅠㅠㅠㅠㅠㅠ)
   3. DP 테이블 정의: 바뀌는게 뭔지를 잘 판단하자, 바뀌는 것(변수)가 DP 테이블의 인덱스(차원)가 된다. (보통 1차원 or 2차원)
   4. DP 점화식: ~지금 생각으로는~ base case부터 말고 적당히 큰 n부터 계산하는게 나을 듯
+
+----
+
+#### Binary Search 관련
+  1. `mid = (high + low) >> 1` 연산할 때 overflow 의식하고 `long long int` 사용하기 
+  2. 이미 배열 속에 있는 값 찾을 때는 종료 조건이 쉽지만,  
+     `if(arr[mid] == target) break;` 
+  3. 조건을 만족하는 최소값 혹은 최대값을 찾을 때는  
+     ```
+     while(low <= high) {
+       // .....
+     }
+     answer = high
+     ```
+  4. `high = mid`or `low = mid`는 무한 루프 => `high = mid+1` `low = mid-1`
+  5. `low=2`와 `high=3`상태일 때 (차이가 1일 때), 이 둘 중에 하나가 정답
+      1. 이때 `mid` 구하면 .5는 반올림 되니까 무조건 `high` 값과 같음
+      2. `high`가 찾고자 하는 답이라면 (답이 3)   
+          - `low = mid+1`로 범위가 잡히고 `low > high`로 범위가 엇갈리면서 while문 탈출
+      4. `low`가 찾고자 하는 답이라면 (답이 2)  
+          - `high = mid-1`로 범위가 잡히고 `low==high`인 상태로 while문 한 번 더 들어감
+          - `mid = (low+high)/2`에서 연산 결과값이 `low`와 같으니까
+          - `low = mid + 1`로 범위가 잡히고 low, high 범위가 엇갈리면서 while문 탈출
+      5. 둘 다 high 값이 정답 (3과 2)

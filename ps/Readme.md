@@ -39,6 +39,8 @@ https://cafe.naver.com/cozal
   2. 이미 배열 속에 있는 값 찾을 때는 종료 조건이 쉽지만,  
      `if(arr[mid] == target) break;` 
   3. 조건을 만족하는 최소값 혹은 최대값을 찾을 때는  
+      - 문제 예시: [백준 2805.나무자르기](https://www.acmicpc.net/problem/2805)
+      - 풀이 예시: [백준/Silver/2805. 나무 자르기/나무 자르기.cc](https://github.com/Sanhaa/Coding/blob/master/%EB%B0%B1%EC%A4%80/Silver/2805.%E2%80%85%EB%82%98%EB%AC%B4%E2%80%85%EC%9E%90%EB%A5%B4%EA%B8%B0/%EB%82%98%EB%AC%B4%E2%80%85%EC%9E%90%EB%A5%B4%EA%B8%B0.cc)
      ```
      while(low <= high) {
        // .....

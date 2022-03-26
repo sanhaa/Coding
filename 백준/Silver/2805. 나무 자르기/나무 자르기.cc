@@ -13,6 +13,9 @@ int mmax(int a, int b) {
 }
 
 int main() {
+	cin.tie(NULL);
+	ios_base::sync_with_stdio(false);
+
 	int N = 0, M = 0;
 	cin >> N >> M;
 
@@ -34,14 +37,11 @@ int main() {
 		if (m < M) high = mid - 1;
 		else low = mid + 1;
 	}
-	
-	long long int ml = 0, mh = 0;
-	for (int a : arr) {
-		ml += mmax(0, a - low);
-		mh += mmax(0, a - high);
-	}
-	if (ml >= M) cout << low << endl;
-	else cout << high << endl;
+
+	// while문을 빠져나오면 항상 low = high+1인 상태가 되는데
+	// 이때 high 값은 최대 h를 보장한다.
+	// while문의 등호가 없다면?? low == high 거나, low == high+1 이라서
+	cout << high << endl;
 	
 	return 0;
 }

@@ -77,7 +77,8 @@
 </div>
 </details>
 
----
+
+----  
 
 
 ## Optimization
@@ -130,4 +131,11 @@
 
 </div>
 </details>
+ 
+----  
+    
+## Etc.
+1. Overloading vs. Overriding
+  - `overloading`: **골라쓰기**, 매개변수, 리턴 값에 따라서
+  - `overrding`: **재정의**, 상속받은 class의 객체가 사용할 함수
 

@@ -123,7 +123,7 @@
 #### 3. 기억해야 할 Bit 연산
   1) i'th bit on/off  
       - on: `n | (1<<i)`
-      - of: `n & ~(1<<i)`
+      - off: `n & ~(1<<i)`
   3) all bit on  
       - `1<<n - 1`
   5) check if power of 2  

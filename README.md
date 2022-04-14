@@ -1,28 +1,34 @@
 # Algorithm & Problem Solving
-
-2022.03 ~ 백준 문제풀이는 `/ps/Beackjoon`이 아니라 `/백준`에 업로드
-(Auto git push extension for BOJ - https://github.com/BaekjoonHub/BaekjoonHub)
+### BaekjoonHub 사용  
+- Auto git push extension for BOJ - https://github.com/BaekjoonHub/BaekjoonHub
+- 2022.03 ~ 
+- 백준 문제 풀이 저장 위치 변경: `/ps/Beackjoon` -> `/백준`에 업로드
+- 프로그래머스 문제 풀이 저장 위치 변경: `/ps/programmers` -> `/프로그래머스`  
 
 ```bash
-+-- 백준
-    +-- Bronze
-    +-- Gold
-    +-- Silver
-+-- algorithm
-    +-- Combination&Permutation
-    +-- DP
-    +-- Graph
-    +-- Sort
-    +-- Stack&Queue
-    +-- Tree
-+-- note
-+-- ps
-    +-- Beackjoon
-    +-- Extra
-    +-- Jungol
-    +-- Leetcode
-    +-- Programmers
-    +-- SWExpert
+├── 프로그래머스
+│   ├── lv1
+│   ├── lv2
+│   └── lv3
+├── 백준
+│   ├── Bronze
+│   ├── Gold
+│   └── Silver
+├── algorithm
+│   ├── Combination&Permutation
+│   ├── DP
+│   ├── Graph
+│   ├── Sort
+│   ├── Stack&Queue
+│   └── Tree
+├── ps
+│   ├── Beackjoon
+│   ├── Extra
+│   ├── Jungol
+│   ├── Leetcode
+│   ├── Programmers
+│   └── SWExpert
+└── note
 ```
 
 ****

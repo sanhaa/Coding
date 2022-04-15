@@ -1,0 +1,15 @@
+def solution(clothes):
+    answer = 1
+    d = dict()
+    # 의상 종류 별로 개수 세기
+    for c in clothes:
+        if c[1] in d:
+            d[c[1]] += 1
+        else:
+            d[c[1]] = 1
+    print(d)
+    
+    for (key, val) in d.items():
+        answer *= val+1
+    
+    return answer-1

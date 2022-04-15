@@ -1,0 +1,11 @@
+def solution(phone_book):
+    d = dict()
+    for val in phone_book:
+        d[val] = 0
+    
+    for target in phone_book:
+        for i in range(1, len(target)):
+            if target[0:i] in d:
+                return False
+    
+    return True

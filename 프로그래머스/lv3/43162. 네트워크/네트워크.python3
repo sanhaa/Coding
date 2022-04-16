@@ -1,0 +1,24 @@
+# BFS , queue
+def solution(n, computers):
+    answer = 0
+    visited = [False] * n
+    
+    for start in range(n): # 모든 노드를 start로 하여
+        if visited[start]:
+            continue
+        visited[start] = True
+
+        que = []
+        que.append(start)
+        while len(que)!=0:
+            cur = que.pop(0) # O(n) 시간복잡도 연산 -> deque 써야함
+            for idx, conn in enumerate(computers[cur]):
+                if visited[idx] or idx == start: continue
+
+                if conn==1:
+                    que.append(idx)
+                    visited[idx] = True
+
+        answer += 1
+        
+    return answer

@@ -1,0 +1,23 @@
+def solution(genres, plays):
+    answer = []
+    genre_cnt = {x: 0 for x in genres}
+    groups = {x: list() for x in genres}
+    
+    
+    for i in range(len(plays)):
+        gen = genres[i]
+        groups[gen].append(i) # 노래 고유 번호 리스트 저장
+        genre_cnt[gen] += plays[i]
+    
+    print(genre_cnt)
+
+    sorted_gen = sorted(genre_cnt.items(), key=lambda item:item[1], reverse=True)
+    print(sorted_gen)
+    for g in sorted_gen:
+        songs = sorted(groups[g[0]], key=lambda x :plays[x], reverse=True)
+        print(songs)
+        answer.append(songs[0])
+        if len(songs) >= 2: # 장르에 속한 곡이 하나라면, 하나의 곡만 선택
+            answer.append(songs[1])
+        
+    return answer

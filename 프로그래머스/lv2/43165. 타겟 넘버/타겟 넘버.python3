@@ -1,0 +1,18 @@
+# DFS, 재귀
+answer = 0
+def calculate(numbers, target, i, result):
+    global answer
+    if len(numbers) <= i:
+        if result == target:
+            answer += 1
+        return
+    
+    calculate(numbers, target, i+1, result+numbers[i])
+    calculate(numbers, target, i+1, result-numbers[i])
+    
+
+def solution(numbers, target):
+    global answer
+    calculate(numbers, target, 0, 0)
+    
+    return answer

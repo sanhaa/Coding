@@ -1,0 +1,32 @@
+# DFS, 재귀
+answer = []
+def recurse(tickets, cur, used, ans):
+    global answer
+
+    if False not in used: # 종료 조건 = 모든 티켓 사용
+        if len(answer) == 0:
+            answer = [] + ans # list copy
+        elif answer > ans:
+            answer = [] + ans
+        return
+    
+    # 사용하지 않은 티켓 중에 사용할 수 있는 (출발지가 같은) 티켓 사용, 다음 도시로 재귀
+    for i, ticket in enumerate(tickets):
+        if used[i] == True: continue
+        if ticket[0] == cur: # 출발지 확인
+            used[i] = True
+            ans.append(ticket[1])
+            recurse(tickets, ticket[1], used, ans)
+            
+            used[i] = False
+            ans.pop()
+            
+
+def solution(tickets):
+
+    ans = ['ICN']
+    used = [False] * len(tickets) # 사용한 티켓 표시
+    
+    recurse(tickets, 'ICN', used, ans)
+    
+    return answer

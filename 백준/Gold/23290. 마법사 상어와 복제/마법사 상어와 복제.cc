@@ -1,190 +1,180 @@
 // BOJ 23290 마법사 상어와 복제
-// vector 함수 인자로 전달하기 - call by value, ref 헷갈림
-// 이동할 수 있는 방향이 없을 때 이동하지 않는다. != 아무것도 안한다.
-
+// 4*4 격자: 1~4 인덱스 사용
 #include <iostream>
 #include <vector>
 using namespace std;
 
-const int N = 5; // 4*4 격자 인덱스 1~4 사용
-int M = 0, S = 0;
-// fish direction 좌부터 시계방향
-int fdr[] = { 0, 0, -1, -1, -1, 0, 1, 1, 1 }, fdc[] = {0, -1, -1, 0, 1, 1, 1, 0, -1 };
-// shark direction 상 좌 하 우 순서
-int sdr[] = { 0, -1, 0, 1, 0 }, sdc[] = { 0, 0,-1, 0, 1 };
-pair<int, int> shark;
-int smap[N][N] = { 0, }; // 냄새 표시, s번째 연습 표시
+const int N = 5; // 4*4 격자
+int fdr[] = { 0, 0, -1, -1, -1, 0, 1, 1, 1 }; // fish 방향 1~8
+int fdc[] = { 0, -1, -1, 0, 1, 1, 1, 0, -1 };
+int sdr[] = { 0, -1, 0, 1, 0 }; // shark 방향 1~
+int sdc[] = { 0, 0, -1, 0, 1 };
 
-void fish_move(vector<int> origin_map[N][N], vector<int> moved_map[N][N]) {
+int sr = 0, sc = 0; // shark pos
+vector<int> board[N][N]; // init?
+vector<int> new_board[N][N];
+int smell[N][N] = { 0, }; // 물고기 냄새가 남는 연습 횟수
+int max_fish = -1;
+int route[3] = { 0, };
 
+void print_board(vector<int> b[N][N]) {
 	for (int i = 1; i < N; i++) {
 		for (int j = 1; j < N; j++) {
-			if (origin_map[i][j].size() == 0) continue;
-			for (int dir : origin_map[i][j]) {
-				int cnt = 0;
-				while (cnt < 8) { // 방향 전환
-					int nd = dir - cnt; // 반시계 방향 회전
-					if (nd <= 0) nd += 8;
-					int nr = i + fdr[nd], nc = j + fdc[nd];
-
-					if ((nr == shark.first && nc == shark.second) // 상어 위치 거나
-						|| (nr<1 || nr>4||nc<1||nc>4) // 격자 범위 초과
-						|| (smap[nr][nc] != 0)) { // 물고기 냄새가 있는 좌표면
-						cnt++; continue; // 다음 방향
-					}
-					// 이동 가능하다면
-					moved_map[nr][nc].push_back(nd);
-					break;
-				}
-				if(cnt==8) moved_map[i][j].push_back(dir); // 이동하지 못한 경우 원래 좌표, 방향
-			}
-		}
-	}
-}
-
-int max_cnt = -1; // 제거된 물고기 최대 개수
-int route[3]; // 상어 루트
-int visit[N][N] = { 0, };
-// rm_cnt가 최대가 되는 이동 route 구하기
-void shark_move(vector<int> moved_map[N][N], int r[3], int depth, int rm_cnt, int s, pair<int, int> sh) {
-	// copy 
-	vector<int> temp[N][N];
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			temp[i][j] = moved_map[i][j];
-		}
-	}
-
-	if (depth >= 3 ) { // 0, 1, 2로 3번 이동 끝
-		if (max_cnt < rm_cnt) {
-			max_cnt = rm_cnt;
-			for (int i = 0; i < 3; i++) route[i] = r[i];
-			// shark = sh;
-		}
-		return;
-	}
-
-	// 나머지 이동
-	int temp_s = 0;
-	for (int nd = 1; nd <= 4; nd++) {
-		r[depth] = nd;
-		int nr = sh.first + sdr[nd], nc = sh.second + sdc[nd];
-		if (nr < 1 || nr >4 || nc < 1 || nc>4) continue;
-
-		int cur_cnt = rm_cnt + moved_map[nr][nc].size();
-
-		// 물고기 제거
-		if (!moved_map[nr][nc].empty()) {
-			moved_map[nr][nc].clear();
-			// 물고기 냄새 
-			//temp_s = smap[nr][nc];
-			//smap[nr][nc] = s; // 연습 번호 기록
-		}
-
-		shark_move(moved_map, r, depth + 1, cur_cnt, s, make_pair(nr, nc));
-
-		// 원상 복구
-		moved_map[nr][nc] = temp[nr][nc];
-		//smap[nr][nc] = temp_s;
-	}
-}
-
-void print_map(vector<int> map[N][N]) {
-	for (int i = 1; i < N; i++) {
-		for (int j = 1; j < N; j++) {
-			if (map[i][j].size() == 0) {
-				cout << "0";
-			}
+			if (b[i][j].size() == 0) cout << ".";
 			else {
-				for (int v : map[i][j]) {
-					cout << v;
-				}
+				for (int k = 0; k < b[i][j].size(); k++)
+					cout << b[i][j][k];
 			}
 			cout << " ";
 		}
 		cout << endl;
 	}
+	cout << " ------------------ \n";
+}
+
+void print_board(int b[N][N]) {
+	for (int i = 1; i < N; i++) {
+		for (int j = 1; j < N; j++) {
+			cout << b[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << " ------------------ \n";
+}
+
+void shark_move(int depth, int removed_fish, int r, int c, int rt[3]) {
+	if (depth == 3) {
+
+		if (max_fish < removed_fish) {
+			// better way to copy route to global var
+			for (int i = 0; i < 3; i++) // copy route
+				route[i] = rt[i];
+			max_fish = removed_fish;
+		}
+		return;
+	}
+
+	// 상하좌우 인접
+	for (int i = 1; i <= 4; i++) {
+		int nr = r + sdr[i], nc = c + sdc[i];
+		if (nr < 1 || nc < 1 || nr >= N || nc >= N) continue;
+
+		vector<int> temp = new_board[nr][nc];
+		new_board[nr][nc].clear();
+		rt[depth] = i;
+		shark_move(depth + 1, removed_fish + temp.size(), nr, nc, rt);
+		new_board[nr][nc].assign(temp.begin(), temp.end());
+	}
+}
+
+void fish_move() {
+	// 1. 물고기 이동
+	for (int i = 1; i < N; i++) {
+		for (int j = 1; j < N; j++) {
+			for (int k = 0; k < board[i][j].size(); k++) {
+				int cur_d = board[i][j][k];
+				int nd = cur_d;
+				while (true) { // 이동 가능한 방향 나올 때까지 탐색, 이동
+					int nr = i + fdr[nd];
+					int nc = j + fdc[nd];
+					if ((nr < 1 || nc < 1 || nr >= N || nc >= N) // 범위
+						|| (nr == sr && nc == sc) // 상어 위치
+						|| (smell[nr][nc] != 0)) { // 냄새 위치
+						nd -= 1; // 반시계 회전
+						if (nd == 0) nd = 8;
+						if (nd == cur_d) {
+							new_board[i][j].push_back(nd);
+							break; // 이동 가능한 방향 없음
+						}
+						continue;
+					}
+					else { // 이동 가능한 방향
+						new_board[nr][nc].push_back(nd);
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 int main() {
-	cin.tie(NULL);
-	ios_base::sync_with_stdio(false);
+	int M = 0, S = 0;
 	cin >> M >> S;
 
-	vector<int> fmap[N][N]; // 각 좌표에 있는 물고기들 방향 정보
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++)
-			fmap[i][j] = vector<int>(0);
-	}
-
 	for (int i = 0; i < M; i++) {
-		int r = 0, c = 0, d = 0; cin >> r >> c >> d;
-		fmap[r][c].push_back(d);
+		int x = 0, y = 0, dir = 0;
+		cin >> x >> y >> dir;
+		board[x][y].push_back(dir);
 	}
+	cin >> sr >> sc;
 
-	cin >> shark.first >> shark.second; // 상어 위치
-	
 	for (int s = 1; s <= S; s++) {
-
-		// init
-		max_cnt = -1;
-		for (int i = 0; i < 3; i++) route[i] = 0; // init
-		for (int i = 0; i < N; i++) for (int j = 0; j < N; j++) visit[i][j] = 0;
-
-		//print_map(fmap);
-		vector<int> moved_map[N][N];
-		fish_move(fmap, moved_map); // 물고기들 한 칸씩 이동
-
-		int r[3] = { 0, };
-		shark_move(moved_map, r, 0, 0, s, shark);
-		// shark 이동 경로만큼 실제 이동
-		 
-		for (int d = 0; d < 3;d++) {
-			int dir = route[d];
-			shark.first += sdr[dir]; shark.second += sdc[dir]; // 상어 이동
-			// 물고기 제거
-			if (!moved_map[shark.first][shark.second].empty()) {
-				moved_map[shark.first][shark.second].clear();
-				// 물고기 냄새 
-				smap[shark.first][shark.second] = s; // 연습 번호 기록
-			}
-		} 
-
-		// 물고기 냄새 지우기 
+		/* INIT */
+		// new board init
 		for (int i = 1; i < N; i++) {
 			for (int j = 1; j < N; j++) {
-				if (smap[i][j] == s - 2) smap[i][j] = 0;
+				new_board[i][j].clear();
 			}
 		}
+		max_fish = -1;
+		for (int i = 0; i < 3; i++) route[i] = 0;
 
-		// 물고기 복제
+		// 1. 물고기 이동
+		fish_move();
+		//cout << "fish moved:\n";
+		//print_board(new_board);
+
+		// 2. 상어 이동
+		int temp[3] = { 0, };
+		bool visit[N][N] = { 0, };
+
+		shark_move(0, 0, sr, sc, temp);
+		//cout << "shark moving: \n";
+		for (int i = 0; i < 3; i++) {
+			//cout << route[i] << " ";
+			sr += sdr[route[i]];
+			sc += sdc[route[i]];
+
+			if (new_board[sr][sc].size() != 0) {
+				new_board[sr][sc].clear();
+				smell[sr][sc] = s;
+			}
+		}
+		//cout << "-> " << sr << " " << sc << endl;
+		//print_board(new_board);
+
+		// 3. 물고기 냄새 제거
 		for (int i = 1; i < N; i++) {
 			for (int j = 1; j < N; j++) {
-				if (fmap[i][j].size() > 0) { // 이동 전의 물고기 (방향) 추가해주기
-					moved_map[i][j].insert(moved_map[i][j].begin(), fmap[i][j].begin(), fmap[i][j].end());
+				if (smell[i][j] == 0) continue;
+				if (smell[i][j] <= s - 2) smell[i][j] = 0;
+			}
+		}
+		//print_board(smell);
+
+		// 4. 처음 물고기 복제
+		for (int i = 1; i < N; i++) {
+			for (int j = 1; j < N; j++) {
+				// copy
+				for (int k = 0; k < new_board[i][j].size(); k++) {
+					board[i][j].push_back(new_board[i][j][k]);
 				}
 			}
 		}
 
-		// 다음 연습을 위해 fmap 업데이트
-		for (int i = 1; i < N; i++) {
-			for (int j = 1; j < N; j++) {
-				fmap[i][j] = moved_map[i][j];
-				//copy(moved_map[i][j].begin(), moved_map[i][j].end(), fmap[i][j].begin());
-			}
-		} 
-		//cout << ">>>\n";
-		//print_map(fmap);
+		//cout << "copy origin: \n";
+		//print_board(board);
 	}
 
-	// 남아있는 물고기 수
+	// S번 연습 후 물고기 수 카운트
 	int ans = 0;
 	for (int i = 1; i < N; i++) {
 		for (int j = 1; j < N; j++) {
-			ans += fmap[i][j].size();
+			ans += board[i][j].size();
 		}
 	}
-	cout << ans << "\n";
+	cout << ans << endl;
 
 	return 0;
 }

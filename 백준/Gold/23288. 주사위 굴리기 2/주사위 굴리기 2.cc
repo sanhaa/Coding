@@ -1,6 +1,6 @@
 // BOJ 23288 주사위 굴리기 2
 #include <iostream>
-#include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -29,14 +29,14 @@ void copy(int* src, int* dst, int len) {
 
 int score_of(int r, int c) {
 	int B = map[r][c], C = 1;
-	queue<pair<int, int> > que;
-	que.push(make_pair(r, c));
+	stack<pair<int, int> > st;
+	st.push(make_pair(r, c));
 
 	bool visit[MAXN][MAXN] = { false, };
 	visit[r][c] = true;
 
-	while (!que.empty()) {
-		pair<int, int> cur = que.front(); que.pop();
+	while (!st.empty()) {
+		pair<int, int> cur = st.top(); st.pop();
 		for (int i = 0; i < 4; i++) {
 			int nr = cur.first + dr[i], nc = cur.second + dc[i];
 			if (nr<1 || nc<1 || nr>N || nc>M) continue;
@@ -45,7 +45,7 @@ int score_of(int r, int c) {
 
 			if (map[nr][nc] == B) {
 				C++;
-				que.push(make_pair(nr, nc));
+				st.push(make_pair(nr, nc));
 			}
 		}
 	}

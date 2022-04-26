@@ -1,5 +1,6 @@
 // BOJ 21611 마법사 상어와 블리자드
-#include <iostream>
+#pragma warning (disable: 4996)
+#include <cstdio>
 #include <vector>
 using namespace std;
 
@@ -10,25 +11,6 @@ int ndir[] = { 3, 2, 4, 1 }; // 구슬 번호 순서: 좌하우상
 int mydir[] = { 0, 3, 1, 0, 2 }; // 2차원 -> 1차원 
 
 int ans[4] = { 0, };
-
-void print_map(int map[MAXN][MAXN], int N) {
-	cout << "print: ---------\n";
-	for (int i = 1; i <= N; i++) {
-		for (int j = 1; j <= N; j++) {
-			cout << map[i][j] << " ";
-		}
-		cout << endl;
-	}
-	cout << "================\n\n";
-}
-
-void print_map(vector<int> map) {
-	cout << "print: ----------\n";
-	for (int i = 0; i < map.size(); i++) {
-		cout << map[i] << " ";
-	}
-	cout << "\n-----------\n";
-}
 
 vector<int> to_vector(int map[MAXN][MAXN], int N) {
 	vector<int> balls;
@@ -90,21 +72,19 @@ bool boom(vector<int> &balls) {
 
 
 int main() {
-	cin.tie(NULL);
-	ios_base::sync_with_stdio(false);
 
 	int N = 0, M = 0;
-	cin >> N >> M;
+	scanf("%d %d", &N, &M);
 	int map[MAXN][MAXN] = { 0, };
 	for (int i = 1; i <= N; i++) {
-		for (int j = 1; j <= N; j++) cin >> map[i][j];
+		for (int j = 1; j <= N; j++) scanf("%d", &map[i][j]);
 	}
 
 	vector<int> balls = to_vector(map, N);
 	
 	for (int m = 1; m <= M; m++) {
 		int d = 0, s = 0;
-		cin >> d >> s;
+		scanf("%d %d", &d, &s);
 
 		/* 1. 얼음 파편 */
 		for (int i = 1; i <= s; i++) {
@@ -153,7 +133,7 @@ int main() {
 		balls.assign(new_balls.begin(), new_balls.end());
 	}
 
-	cout << 1 * ans[1] + 2 * ans[2] + 3 * ans[3] << endl;
+	printf("%d\n", 1 * ans[1] + 2 * ans[2] + 3 * ans[3]);
 
 	return 0;
 }

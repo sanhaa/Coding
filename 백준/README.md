@@ -1,4 +1,8 @@
 ### 문제 정리 (최신순)
+- [x] [BOJ 14501 퇴사](https://www.acmicpc.net/problem/14501)
+   - **0.5h**
+   - `BF`, `DP`
+   - 재귀로 BF 하는데 뭔가 애매하다? 싶으면 main에서 처음 재귀 함수 호출하는 부분을 잘 조절할 것 
 - [x] [BOJ 21611: 마법사 상어와 블리자드](https://www.acmicpc.net/problem/21611)
    - **2.5h**
    - `구현`, `시뮬레이션`

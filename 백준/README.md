@@ -1,4 +1,8 @@
 ### 문제 정리 (최신순)
+- [x] [BOJ 14888 연산자끼워넣기]()
+   - **0.5h**
+   - `BF`, `backtracking`
+   - 재귀로 순열 구하듯이 풀었고, 음수 양수 min max 값 잘 
 - [x] [BOJ 14501 퇴사](https://www.acmicpc.net/problem/14501)
    - **0.5h**
    - `BF`, `DP`

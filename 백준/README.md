@@ -1,7 +1,22 @@
 ### 문제 정리 (최신순)
-- [x] [BOJ 14889: 스타트와 링크](https://www.acmicpc.net/problem/14889)
-   - **1h**
-   - 'BF', 'backtracking'
+- [x] [BOJ 13460: 구슬탈출2](https://www.acmicpc.net/problem/13460)
+   <details> 
+   <summary>BF, backtracking </summary>  
+   <div>  
+      
+   - 옛날에 어렵게 풀었던 것 치고는 별 게 없다...?  
+   - 확실히 dr, dc 배열 만들어서 하는 게 편하다.  
+   - RED, BLUE 동시에 들어갈 때, 구슬 위치가 변하지 않았을 때 -> 재귀 return 하기  
+   - 굴려서 같은 위치가 되면 -> 뒤에 있던 구슬 한 칸 밀기  
+      
+   </div>  
+   </details>
+   
+- [x] [BOJ 14889: 스타트와 링크](https://www.acmicpc.net/problem/14889) 1h
+   <details>
+   <summary>BF, backtracking</summary>
+   <div>
+      
    - 조합 문제인데 순열 구하듯이 하면, 중복이 너무 많음 ex. {1, 2, 3}, {1, 3, 2}, {2, 1, 3} ...
    - 재귀 후 for문 돌 때 현재 위치부터 탐색해서 항상 오름차순 순열만 구하도록 하기
    - 두 팀을 구분해서 중복 찾기는 어떻게 고칠까..?
@@ -10,10 +25,14 @@
    start = {1, 2, 3}, link = {4, 5, 6}
    start = {4, 5, 6}, link = {1, 2, 3}
    ```
-- [x] [BOJ 14888: 연산자끼워넣기](https://www.acmicpc.net/problem/14888)
-   - **0.5h**
+      
+   </div>
+   </details>
+   
+- [x] [BOJ 14888: 연산자끼워넣기](https://www.acmicpc.net/problem/14888) 0.5h
    - `BF`, `backtracking`
-   - 재귀로 순열 구하듯이 풀었고, 음수 양수 min max 값 잘 
+   - 재귀로 순열 구하듯이 풀었고, 음수 양수 min max 값 잘 생각하기
+   
 - [x] [BOJ 14501: 퇴사](https://www.acmicpc.net/problem/14501)
    - **0.5h**
    - `BF`, `DP`

@@ -1,5 +1,5 @@
 ### 문제 정리 (최신순)
-- [] [BOJ 3190: 뱀](https://www.acmicpc.net/problem/3190) +
+- [x] [BOJ 3190: 뱀](https://www.acmicpc.net/problem/3190) +
    <details> 
    <summary>구현, 자료구조, 시뮬레이션, 덱, 큐 </summary>  
    <div>  

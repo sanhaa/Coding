@@ -15,7 +15,6 @@ int max_num = 0; // answer
 // 상 하 좌 우
 int dr[] = { -1, 1, 0, 0 };
 int dc[] = { 0, 0, -1, 1 };
-int start_idx[4] = { 0, };
 
 void print_board(vector<vector<int>> board) {
 	for (int i = 0; i < N; i++) {
@@ -26,114 +25,80 @@ void print_board(vector<vector<int>> board) {
 	}
 }
 
+// 한 줄씩 처리
+void line(vector<vector<int>>& board, int r, int c, int dir ) {
+	int _r = r, _c = c;
+	// 1. 합치기
+	while (r >= 0 && c>=0 && r < N && c<N) {
+		if (board[r][c] == 0) { // 숫자 있는 칸 찾기
+			r -= dr[dir]; c -= dc[dir]; // 이동 방향 끝 칸부터 반대로
+			continue;
+		}
+		int nr = r - dr[dir], nc = c - dc[dir];
+		while (nr >= 0 && nr < N && nc >= 0 && nc < N) {
+			if (board[nr][nc] == 0) {
+				nr -= dr[dir];
+				nc -= dc[dir];
+				continue;
+			}
+			else if (board[nr][nc] == board[r][c]) { // 같은 수 합치기
+				board[r][c] *= 2; // 2배
+				// update answer
+				if (max_num < board[r][c]) max_num = board[r][c];
+				board[nr][nc] = 0;
+			}
+			r = nr; c = nc;
+			break;
+		}
+		if (nr < 0 || nr >= N || nc < 0 || nc >= N) break;
+	}
+	// 2. 밀기
+	r = _r; c = _c;
+	while (r >= 0 && c >= 0 && r < N && c < N) {
+		if (board[r][c] == 0) {
+			r -= dr[dir]; c -= dc[dir];
+			continue;
+		}
+		int val = board[r][c];
+		int nr = r + dr[dir], nc = c + dc[dir];
+		while (nr >= 0 && nr < N && nc >= 0 && nc < N) {
+			if (board[nr][nc] == 0) {
+				board[nr][nc] = val; // 빈칸으로 밀기
+				board[nr - dr[dir]][nc - dc[dir]] = 0; // 이전 칸 빈칸 만들기
+				nr += dr[dir]; nc += dc[dir];
+			}
+			else { // 빈칸이 아닌 다른 숫자거나, ...
+				break;
+			}
+		}
+		r -= dr[dir]; c -= dc[dir];
+	}
+}
+
 // 이동 방향, 이동 횟수
 void move(vector<vector<int>> board, int dir, int cnt) {
 	if (cnt > 5) return;
+	switch (dir)
+	{
+	case(0): // 상
+		for (int c = 0; c < N; c++)
+			line(board, 0, c, dir);
+		break;
+	case(1): // 하
+		for (int c = 0; c < N; c++)
+			line(board, N - 1, c, dir);
+		break;
+	case(2): // 좌
+		for (int r = 0; r < N; r++)
+			line(board, r, 0, dir);
+		break;
+	case(3): // 우
+		for (int r = 0; r < N; r++)
+			line(board, r, N - 1, dir);
+		break;
 
-	// 상 하 이동
-	if (dir == 0 || dir == 1) {
-		for (int c = 0; c < N; c++) {
-			// 1. 합치기
-			//int r = start_idx[dir];
-			int r = dir == 0 ? 0 : N - 1;
-			while (r >= 0 && r < N) {
-				if (board[r][c] == 0) { // 다음 칸
-					r -= dr[dir]; c -= dc[dir]; // 이동 방향 끝 칸부터 반대로
-					continue;
-				}
-				int nr = r - dr[dir], nc = c - dc[dir];
-				while (nr >= 0 && nr < N && nc >= 0 && nc < N) {
-					if (board[nr][nc] == 0) {
-						nr -= dr[dir];
-						nc -= dc[dir];
-						continue;
-					}
-					else if (board[nr][nc] == board[r][c]) { // 같은 수 합치기
-						board[r][c] *= 2; // 2배
-						// update answer
-						if (max_num < board[r][c]) max_num = board[r][c];
-						board[nr][nc] = 0;
-					}
-					r = nr; c = nc;
-					break;
-				}
-				if (nr < 0 || nr >= N || nc < 0 || nc >= N) break;
-				//r -= dr[dir]; c -= dc[dir];
-			}
-			// 2. 밀기
-			r = start_idx[dir];
-			while (r >= 0 && r < N) {
-				if (board[r][c] == 0) {
-					r -= dr[dir]; c -= dc[dir];
-					continue;
-				}
-				int val = board[r][c];
-				int nr = r + dr[dir], nc = c + dc[dir];
-				while (nr >= 0 && nr < N && nc >= 0 && nc < N) {
-					if (board[nr][nc] == 0) {
-						board[nr][nc] = val; // 빈칸으로 밀기
-						board[nr - dr[dir]][nc - dc[dir]] = 0; // 이전 칸 빈칸 만들기
-						nr += dr[dir]; nc += dc[dir];
-					}
-					else { // 빈칸이 아닌 다른 숫자거나, ...
-						break;
-					}
-				}
-				r -= dr[dir]; c -= dc[dir];
-			}
-		}
-	}
-	
-	// 좌 우 이동
-	else {
-		for (int r = 0; r < N; r++) {
-			// 1. 합치기
-			int c = start_idx[dir];
-			while (c >= 0 && c < N) {
-				if (board[r][c] == 0) { // 다음 칸
-					r -= dr[dir]; c -= dc[dir]; // 이동 방향 끝 칸부터 반대로
-					continue;
-				}
-				int nr = r - dr[dir], nc = c - dc[dir];
-				while (nr >= 0 && nr < N && nc >= 0 && nc < N) {
-					if (board[nr][nc] == 0) {
-						nr -= dr[dir];
-						nc -= dc[dir];
-						continue;
-					}
-					else if (board[nr][nc] == board[r][c]) { // 같은 수 합치기
-						board[r][c] *= 2; // 2배
-						// update answer
-						if (max_num < board[r][c]) max_num = board[r][c];
-						board[nr][nc] = 0;
-					}
-					r = nr; c = nc;
-					break;
-				}
-				if (nr < 0 || nr >= N || nc < 0 || nc >= N) break;
-			}
-			// 2. 밀기
-			c = start_idx[dir];
-			while (c >= 0 && c < N) {
-				if (board[r][c] == 0) {
-					r -= dr[dir]; c -= dc[dir];
-					continue;
-				}
-				int val = board[r][c];
-				int nr = r + dr[dir], nc = c + dc[dir];
-				while (nr >= 0 && nr < N && nc >= 0 && nc < N) {
-					if (board[nr][nc] == 0) {
-						board[nr][nc] = val; // 빈칸으로 밀기
-						board[nr - dr[dir]][nc - dc[dir]] = 0; // 이전 칸 빈칸 만들기
-						nr += dr[dir]; nc += dc[dir];
-					}
-					else { // 빈칸이 아닌 다른 숫자거나, ...
-						break;
-					}
-				}
-				r -= dr[dir]; c -= dc[dir];
-			}
-		}
+	default:
+		break;
 	}
 
 	// 다음 이동
@@ -157,7 +122,6 @@ int main() {
 		}
 		board.push_back(temp);
 	}
-	start_idx[0] = 0; start_idx[1] = N - 1; start_idx[2] = 0; start_idx[3] = N - 1;
 
 	for (int dir = 0; dir < 4; dir++) {
 		move(board, dir, 1);

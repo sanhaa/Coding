@@ -1,5 +1,21 @@
 ### 문제 정리 (최신순)
-- [x] [BOJ 13460: 구슬탈출2](https://www.acmicpc.net/problem/13460)
+- [] [BOJ 3190: 뱀](https://www.acmicpc.net/problem/3190) +
+   <details> 
+   <summary>구현, 자료구조, 시뮬레이션, 덱, 큐 </summary>  
+   <div>  
+      
+   - snake 몸통과 부딪히는지 검사할 때 `body[]` 배열을 for문으로 돌지 않고 `board`에 아예 표시함
+   - body 배열이 필요한 건 똑같지만 반복문으로 검사하지 않아서 시간 단축
+   - `endf` 플래그로 종료하는 로직도 간단해짐
+   - L, D로 왼쪽 오른쪽 방향 전환할 때 dir 바꿔주는 배열은 잘 짠듯
+      ```C++
+      int L_ni[4] = { 2, 3, 1, 0 }; // Left rotate, next idx(dir)
+      int R_ni[4] = { 3, 2, 0 ,1 }; // new dir idx(Right rotate) = R_ni[dir]
+      ```
+      
+   </div>  
+   </details>
+- [x] [BOJ 13460: 구슬탈출2](https://www.acmicpc.net/problem/13460) +
    <details> 
    <summary>BF, backtracking </summary>  
    <div>  
@@ -12,7 +28,7 @@
    </div>  
    </details>
    
-- [x] [BOJ 14889: 스타트와 링크](https://www.acmicpc.net/problem/14889) 1h
+- [x] [BOJ 14889: 스타트와 링크](https://www.acmicpc.net/problem/14889) 1h +
    <details>
    <summary>BF, backtracking</summary>
    <div>
@@ -29,11 +45,11 @@
    </div>
    </details>
    
-- [x] [BOJ 14888: 연산자끼워넣기](https://www.acmicpc.net/problem/14888) 0.5h
+- [x] [BOJ 14888: 연산자끼워넣기](https://www.acmicpc.net/problem/14888) 0.5h +
    - `BF`, `backtracking`
    - 재귀로 순열 구하듯이 풀었고, 음수 양수 min max 값 잘 생각하기
    
-- [x] [BOJ 14501: 퇴사](https://www.acmicpc.net/problem/14501)
+- [x] [BOJ 14501: 퇴사](https://www.acmicpc.net/problem/14501) +
    - **0.5h**
    - `BF`, `DP`
    - 재귀로 BF 하는데 뭔가 애매하다? 싶으면 main에서 처음 재귀 함수 호출하는 부분을 잘 조절할 것 
@@ -87,7 +103,7 @@
    - `백트래킹`: 모든 경우의 수 구하기 (BF) + 가지치기 (사다리 개수 <= 3)
    - `백트래킹`: 모든 경우의 수를 구하고 있는지, 중복을 최소화하고 있는지. (현재 사다리 verti 이상의 사다리 추가)
  
-- [x] [BOJ 23290: 마법사 상어와 복제](https://www.acmicpc.net/problem/23290): 
+- [x] [BOJ 23290: 마법사 상어와 복제](https://www.acmicpc.net/problem/23290) +
    - **4h -> 3h**
    - 2차 후기
       ```

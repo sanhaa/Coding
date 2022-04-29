@@ -1,4 +1,23 @@
 ### 문제 정리 (최신순)
+- [x] [BOJ 14500: 테트로미노]() +
+   <details>
+   <summary> 구현, BF </summary>
+   <div>  
+      
+   - 이차원 배열 안에서 특정 모양 BF로 찾을 때, board를 90도씩 회전하는 방법 떠올리기
+   - 90도 회전 코드 짤 때, `N*M` 이면 `vector<vector<int>>` 쓰는 게 나은 듯함. 
+   - row, col 잘 바꿔주기
+     ```C++
+      // board -> new_board: 90도 회전
+      for (int c = 0; c < COL; c++) { // COL = board col 사이즈
+         for (int r = 0; r < ROW; r++) { // ROW = board row 사이즈
+            new_board[c][ROW - 1 - r] = board[r][c];
+         }
+      }
+     ```
+      
+   </div>
+   </details>
 - [x] [BOJ 3190: 뱀](https://www.acmicpc.net/problem/3190) +
    <details> 
    <summary>구현, 자료구조, 시뮬레이션, 덱, 큐 </summary>  

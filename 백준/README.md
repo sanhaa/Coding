@@ -1,5 +1,37 @@
 ### 문제 정리 (최신순)
-- [x] [BOJ 14500: 테트로미노]() +
+ 
+- [x] [BOJ 14890: 경사로](https://www.acmicpc.net/problem/14890)
+   <details>
+   <summary>  🕛=1h 40m ✔️ </summary>
+   <div>
+   
+   - **구현, 인덱스 주의**
+   - 👀 for 문 안의 index가 for 내부에서 변경될 때는 `while(idx<범위)` 사용하기
+      ```
+      왜냐면 for 돌면서 +1씩 되는 것까지 생각하면서 인덱스 변경하려면 복잡함
+      ```
+   - 높이 차이를 구하려고 cur, prev 위치를 비교, 경사면 설치할 때는 next 변수 사용하면서 뒤로 설치 vs. 앞으로 설치 구현
+   - `placed[]`: 일차원 배열에 설치 여부 체크 했는데 일차원이라 대응시키는 게 헷갈린 거 같기도 하고
+   - 맨날 이중 반복문으로 검사하고 나서 인덱스 바꿔주는 데서 시간이 너무 오래걸림 --> inner for문에서 사용하는 변수는 복사해서 사용하고, `+=l` or `+=i`와 같이 일관성 있게 해야할 듯
+   - row 탐색, col 탐색에 공통적으로 적용할 수 있는 코드 구현
+   - ~C++ 연산자 overloading 활용하기~
+   
+   </div>
+   </details>
+   
+- [x] [BOJ 14503: 로봇청소기](https://www.acmicpc.net/problem/14503) 
+   <details>
+   <summary>🕛=30m ✔️✔️</summary>
+   <div>     
+      
+   - **DFS + 방향 전환**
+   - 네 방향 모두 청소할 수 없을 때 후진하거나 정지 -> `while()`로 네 방향 탐색하고 나와서 `if(네 방향 불가)` 조건을 한 번 더 해줘야 했음
+   - 네 방향 탐색 후 갈 곳 없으면 ~~ -> `while` 말고 `for`문으로 4번이라는 거 명확히 해주기
+   
+   </div>
+  </details>
+   
+- [x] [BOJ 14500: 테트로미노](https://www.acmicpc.net/problem/14500) ✔️✔️
    <details>
    <summary> 구현, BF </summary>
    <div>  
@@ -18,7 +50,7 @@
       
    </div>
    </details>
-- [x] [BOJ 3190: 뱀](https://www.acmicpc.net/problem/3190) +
+- [x] [BOJ 3190: 뱀](https://www.acmicpc.net/problem/3190) ✔️✔️
    <details> 
    <summary>구현, 자료구조, 시뮬레이션, 덱, 큐 </summary>  
    <div>  
@@ -34,7 +66,7 @@
       
    </div>  
    </details>
-- [x] [BOJ 13460: 구슬탈출2](https://www.acmicpc.net/problem/13460) +
+- [x] [BOJ 13460: 구슬탈출2](https://www.acmicpc.net/problem/13460) ✔️✔️
    <details> 
    <summary>BF, backtracking </summary>  
    <div>  
@@ -47,7 +79,7 @@
    </div>  
    </details>
    
-- [x] [BOJ 14889: 스타트와 링크](https://www.acmicpc.net/problem/14889) 1h +
+- [x] [BOJ 14889: 스타트와 링크](https://www.acmicpc.net/problem/14889) 🕛=1h ✔️
    <details>
    <summary>BF, backtracking</summary>
    <div>
@@ -64,27 +96,27 @@
    </div>
    </details>
    
-- [x] [BOJ 14888: 연산자끼워넣기](https://www.acmicpc.net/problem/14888) 0.5h +
+- [x] [BOJ 14888: 연산자끼워넣기](https://www.acmicpc.net/problem/14888) 🕛=0.5h
    - `BF`, `backtracking`
    - 재귀로 순열 구하듯이 풀었고, 음수 양수 min max 값 잘 생각하기
    
 - [x] [BOJ 14501: 퇴사](https://www.acmicpc.net/problem/14501) +
-   - **0.5h**
+   - 🕛=0.5h
    - `BF`, `DP`
    - 재귀로 BF 하는데 뭔가 애매하다? 싶으면 main에서 처음 재귀 함수 호출하는 부분을 잘 조절할 것 
 - [x] [BOJ 21611: 마법사 상어와 블리자드](https://www.acmicpc.net/problem/21611)
-   - **2.5h**
+   - 🕛=2.5h
    - `구현`, `시뮬레이션`
    - 아예 처음부터 2차원 map -> 1차원 vector로 변환하고 얼음 파편으로 구슬 파괴할 때 index 규칙 구해서 처리
       - [ ] 달팽이 순회 복습 
 - [x] [BOJ 23288: 주사위 굴리기2](https://www.acmicpc.net/problem/23288)
-   - **1h**
+   - 🕛=1h
    - `구현`, `그래프 탐색`, `BFS`, `DFS`, `시뮬레이션`
    - enum 쓸 때 순서 유의 (동 - 남 - 서 - 북)
    - `dice[]` 배열 안의 값 바꿀 때 밀고 당기는 거 헷갈려서 `new_dice[]` 복사해서 사용함 -> 헷갈릴 때는 쉬운 방법으로
    - 이어져 있는 같은 숫자 탐색이라 DFS, BFS 둘 다 사용해도 된다.
 - [x] [BOJ 23289: 온풍기 안녕!](https://www.acmicpc.net/problem/23289)
-   - **3h**
+   - 🕛=3h
    - `구현`, `시뮬레이션`
    - 벽 정보를 저장하고 벽인지 검사하는 로직을 생각하는 데 시간이 오래걸림   
       - `bool walls_hori[]` `bool walls_verti[]` 이차원 배열 만들어서 따로 검사
@@ -109,21 +141,21 @@
       // ....
       ```
 - [x] [BOJ 23291: 어항 정리](https://www.acmicpc.net/problem/23291)
-   - **3h**
+   - 🕛=3h
    - `구현`, `시뮬레이션`
    -  문제 과정이 길었지만 구현은 일반적인 편
    -  2차원 배열이 필요했지만 높이가 각각 달라 vector 사용
    -  90도, 180도 회전하고 쌓는 부분에서 역순으로 `vector.push_back()`: 인덱스 설계하는 것이 핵심
 
 - [X] [BOJ 15684: 사다리 조작](https://www.acmicpc.net/problem/15684)
-   - **1.1h** 
+   - 🕛=1.1h
    - `구현`, `시뮬레이션`, `백트래킹`
    - 정답률보고 식겁했지만, INT_MAX 때문에 컴파일 에러난 거 빼고는 한 번에 맞춤 (사실 이전에 한 번 풀었던 거지만..)
    - `백트래킹`: 모든 경우의 수 구하기 (BF) + 가지치기 (사다리 개수 <= 3)
    - `백트래킹`: 모든 경우의 수를 구하고 있는지, 중복을 최소화하고 있는지. (현재 사다리 verti 이상의 사다리 추가)
  
 - [x] [BOJ 23290: 마법사 상어와 복제](https://www.acmicpc.net/problem/23290) +
-   - **4h -> 3h**
+   - 🕛=4h -> 3h
    - 2차 후기
       ```
       와 진짜.. 한 번 풀었던 건데도 너무 헤맸다. 상어가 갔던 칸 다시 못간다고 왜 단정지었을까? (상,하,상) 가능인데 visit 검사 해버림
@@ -169,30 +201,20 @@
       ```
 
 - [x] [BOJ 9372: 상근이의여행](https://www.acmicpc.net/problem/9372): BFS나 DFS를 쓰려고 했는데 그냥 노드가 N개 있을 때 모든 노드를 연결하려면 최소 N-1 개의 간선이 필요하다는 것만 알면된다.
-   - **75 min**
+   - 🕛=1h
   - 그럼에도 헤맸던 이유가 '비행기를 탄다'고 표현하니까 a->b 와 b->a 왔다 갔다하면 두 번 비행기를 타는 거 아닌가? 싶었는데 그냥 비행기의 종류를 구하는거라서 방향 상관없이 간선 개수만 구하면 된다.
   - 모든 도시가 연결되어 있음을 보장한다는 문제 조건이 있기 때문에 최소 신장 트리(MST)를 찾고 간선 개수를 구하면 된다.
   - MST를 직접 구할 필요 없이 간선 개수는 항상 N-1개이므로 `N-1`만 출력하면 된다.  
-- [x] [BOJ 14503: 로봇청소기](https://www.acmicpc.net/problem/14503): 
-  - **50 min**
-  - **`DFS` + 방향 전환**
-  - 네 방향 모두 청소할 수 없을 때 후진하거나 정지 -> `while()`로 네 방향 탐색하고 나와서 `if(네 방향 불가)` 조건을 한 번 더 해줘야 했음
+   
 - [X] [BOJ 12100: 2048(Easy)](https://www.acmicpc.net/problem/12100): 
-   - **3 h**
+   - 🕛=3h
    - **`백트래킹`, `시뮬레이션`**
    - 문제 이해에도 시간이 조금 걸렸음
    - 구현할 때, 상하좌우 이동할 때 그 반대방향부터 탐색해서 합치기 + 밀기 과정 해주기
    - 이중 반복문으로 반대 방향으로 탐색하는 거 때문에 인덱스 바꾸는 거에 헤멨음
    - C언어에서 함수에 배열을 인자로 넘겨줄 때 무조건 주소값을 넘겨줌 -> vector 사용해서 복사해서 넘겨주게 함
    - 상하 / 좌우가 각각 row, col이 다르게 움직여야 해서 따로 구현했는데 잘 생각해보면 합치는 방법이 있지 않을까? --> TODO
-- [x] [BOJ 14890: 경사로](https://www.acmicpc.net/problem/14890):
-   - **1h 40m**
-   - **구현**
-   - 높이 차이를 구하려고 cur, prev 위치를 비교, 경사면 설치할 때는 next 변수 사용하면서 뒤로 설치 vs. 앞으로 설치 구현
-   - `placed[]`: 일차원 배열에 설치 여부 체크 했는데 일차원이라 대응시키는 게 헷갈린 거 같기도 하고
-   - 맨날 이중 반복문으로 검사하고 나서 인덱스 바꿔주는 데서 시간이 너무 오래걸림 --> inner for문에서 사용하는 변수는 복사해서 사용하고, `+=l` or `+=i`와 같이 일관성 있게 해야할 듯
-   - row 탐색, col 탐색에 공통적으로 적용할 수 있는 코드 구현
-   - C++ 연산자 overloading 활용하기
+   
 - [x] [BOJ 1074: Z](https://www.acmicpc.net/problem/1074):
    - **1h**
    - `분할정복`, `재귀`

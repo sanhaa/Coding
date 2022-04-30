@@ -1,5 +1,55 @@
 ### 문제 정리 (최신순) 👀 🕛  ✔️ 
 
+- [x] [BOJ 23290: 마법사 상어와 복제](https://www.acmicpc.net/problem/23290)
+ 	<details>
+	<summary> 🕛=4h ✔️ 🕛=3h ✔️ 8방향 시뮬레이션과 DFS</summary>
+
+	- 👀 모든 DFS가 visit 검사를 하는 건 아니다.
+   - 2차 후기
+      ```
+      와 진짜.. 한 번 풀었던 건데도 너무 헤맸다. 상어가 갔던 칸 다시 못간다고 왜 단정지었을까? (상,하,상) 가능인데 visit 검사 해버림
+      메모리랑 시간은 단축시켰음: shark_move()할 때 전체 배열 복사하지 않고 해당 칸 vector만 복사
+      ```
+   - `구현`, `시뮬레이션`, `백트래킹`
+   - 문제 자체가 어려웠던 건 아닌데
+   - c++에서 vector와 배열이 함수 인자로 넘겨질 때 복사되는지 아닌지 헷갈려서 시간을 많이 썼음
+   - 2차원 격자에 물고기 정보가 vector<int>로 들어가 있는 3차원 배열 `vector<int> map[5][5]` 사용
+   - **vector는 함수 인자로 넘겨질 때 복사됨, 배열은 복사가 아니라 포인터 참조함**
+   - `void func(vector<int> map[N][N])` 에서 map은 vector<int> 자료형의 이차원 배열이므로 복사되지 않고 포인터 참조함
+   - [ ] TODO: shark_move() 로직 개선하기 (재귀함수 내에서 다 처리할 수는 없는지, 원본 배열 복사해서 )
+   - [ ] DFS (백트래킹) 구현 복습하기
+   - `shark_move()` 현재 로직: 제거되는 물고기가 최대가 되는 이동 루트 찾기 ex. (상, 상, 좌) (우, 우, 하) 등
+      ```C++
+      // 전역 변수
+      int max_cnt = -1; // 제거된 물고기 최대 개수
+      int route[3]; // 상어 루트
+   
+      void shark_move(map, r, depth){
+         if(depth>=3){
+            // max_cnt 업데이트
+            // route 업데이트
+            // 재귀 종료 
+         }
+         temp = map;
+         // ...
+         // for (4방향 dir 반복)
+         map[nr][nc].clear(); // 물고기 제거
+         shark_move(map);
+         map[nr][nc] = temp[nr][nc];
+      }
+   
+      // ......
+      int main(){
+         // ....
+         shark_move();
+         // 함수 종료 후 route 정보 가지고 
+         // shark 좌표 움직이기
+         // 물고기 제거하기
+         // 물고기 냄새 남기기
+      }
+      ```
+
+
 - [x] [ BOJ 20056: 마법사 상어와 파이어볼](https://www.acmicpc.net/problem/20056)
   <details>
   <summary>✔️ 🕛=1h ✔️ 8방향과 격자 범위 넘나들기 구현</summary>
@@ -241,54 +291,6 @@
                // 현재 기준 칸과의 연산만 이루어진 것이므로 인접 칸은 따로 방문체크 하지 않음
                // ....
       // ....
-      ```
-
-
- 
-- [x] [BOJ 23290: 마법사 상어와 복제](https://www.acmicpc.net/problem/23290) +
-   - 🕛=4h -> 3h
-   - 2차 후기
-      ```
-      와 진짜.. 한 번 풀었던 건데도 너무 헤맸다. 상어가 갔던 칸 다시 못간다고 왜 단정지었을까? (상,하,상) 가능인데 visit 검사 해버림
-      메모리랑 시간은 단축시켰음: shark_move()할 때 전체 배열 복사하지 않고 해당 칸 vector만 복사
-      ```
-   - `구현`, `시뮬레이션`, `백트래킹`
-   - 문제 자체가 어려웠던 건 아닌데
-   - c++에서 vector와 배열이 함수 인자로 넘겨질 때 복사되는지 아닌지 헷갈려서 시간을 많이 썼음
-   - 2차원 격자에 물고기 정보가 vector<int>로 들어가 있는 3차원 배열 `vector<int> map[5][5]` 사용
-   - **vector는 함수 인자로 넘겨질 때 복사됨, 배열은 복사가 아니라 포인터 참조함**
-   - `void func(vector<int> map[N][N])` 에서 map은 vector<int> 자료형의 이차원 배열이므로 복사되지 않고 포인터 참조함
-   - [ ] TODO: shark_move() 로직 개선하기 (재귀함수 내에서 다 처리할 수는 없는지, 원본 배열 복사해서 )
-   - [ ] DFS (백트래킹) 구현 복습하기
-   - `shark_move()` 현재 로직: 제거되는 물고기가 최대가 되는 이동 루트 찾기 ex. (상, 상, 좌) (우, 우, 하) 등
-      ```C++
-      // 전역 변수
-      int max_cnt = -1; // 제거된 물고기 최대 개수
-      int route[3]; // 상어 루트
-   
-      void shark_move(map, r, depth){
-         if(depth>=3){
-            // max_cnt 업데이트
-            // route 업데이트
-            // 재귀 종료 
-         }
-         temp = map;
-         // ...
-         // for (4방향 dir 반복)
-         map[nr][nc].clear(); // 물고기 제거
-         shark_move(map);
-         map[nr][nc] = temp[nr][nc];
-      }
-   
-      // ......
-      int main(){
-         // ....
-         shark_move();
-         // 함수 종료 후 route 정보 가지고 
-         // shark 좌표 움직이기
-         // 물고기 제거하기
-         // 물고기 냄새 남기기
-      }
       ```
 
 - [x] [BOJ 9372: 상근이의여행](https://www.acmicpc.net/problem/9372): BFS나 DFS를 쓰려고 했는데 그냥 노드가 N개 있을 때 모든 노드를 연결하려면 최소 N-1 개의 간선이 필요하다는 것만 알면된다.

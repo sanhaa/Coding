@@ -1,4 +1,5 @@
 // BOJ 20056 마법사상어와파이어볼
+// fireballs 벡터에 저장하지 않고 2차원 배열에 저장하면 안되나?
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -12,7 +13,15 @@ struct FIREBALL {
 	FIREBALL() {}
 	FIREBALL(int _r, int _c, int _m, int _s, int _d) {
 		r = _r; c = _c; m = _m; s = _s; d = _d;
-	}	
+	}
+};
+
+struct FB {
+	int m = 0, s = 0, d = 0;
+	FB() {}
+	FB(int _m, int _s, int _d) {
+		m = _m; s = _s; d = _d;
+	}
 };
 
 const int MAXN = 60;
@@ -24,93 +33,101 @@ int odd_d[] = { 1, 3, 5, 7 };
 vector<FIREBALL> nfireballs;
 int ans = 0; // 파이어볼 질량 합
 
+void print_vector(vector<FB> board[MAXN][MAXN], int N) {
+	for (int i = 1; i <= N; i++) {
+		for (int j = 1; j <= N; j++) {
+			cout << i << " " << j << " : ";
+			for (FB v : board[i][j]) {
+				cout << "("<<v.m << ", " << v.s << ", " << v.d << ") ";
+			}
+			cout << endl;
+		}
+	}
+	cout << "------\n";
+}
+
 int main() {
 	cin.tie(NULL);
 	ios_base::sync_with_stdio(false);
 
 	int N = 0, M = 0, K = 0;
 	cin >> N >> M >> K;
+
+	vector<FB> board[MAXN][MAXN];
+
 	for (int i = 0; i < M; i++) { // M개의 파이어볼 정보
 		int r, c, m, s, d;
 		cin >> r >> c >> m >> s >> d;
-		FIREBALL f = FIREBALL(r, c, m, s, d);
-		nfireballs.push_back(f);
+		board[r][c].push_back(FB(m, s, d));
 		ans += m;
 	}
-
+	
 	while (K--) {
-		//cout << "\nmove move\n";
-		// 각 칸 파이어볼 초기화
-		//for (int i = 1; i <= N; i++) {
-		//	for (int j = 1; j <= N; j++) {
-		//		map[i][j].erase(map[i][j].begin(), map[i][j].end());
-		//	}
-		//}
-		//vector<FIREBALL> map[MAXN][MAXN];
-		vector<FIREBALL> fireballs = nfireballs;
-		nfireballs.clear();
+		vector<FB> new_board[MAXN][MAXN];
 
-		bool visit[MAXN][MAXN] = { 0, };
-
-		// 이동 명령
-		for (vector<FIREBALL>::iterator iter = fireballs.begin(); iter != fireballs.end();iter++) {
-			FIREBALL curf = *iter;
-			//cout << iter->r <<" " << iter->c << " -> ";
-
-			iter->r += dr[curf.d] * curf.s;
-			iter->c += dc[curf.d] * curf.s;
-			while (iter->r > N) iter->r -= N;
-			while (iter->r < 1) iter->r += N;
-			while (iter->c > N) iter->c -= N;
-			while (iter->c < 1) iter->c += N;
-			
-			//cout << iter->r <<" " << iter->c <<" | "<<iter->m <<" "<<iter->s<<" "<<iter->s << endl;
-
-			// 이동하고, 이동한 칸에 파이어볼 기록
-			//map[iter->r][iter->c].push_back(*iter); // 값 바뀐걸로 잘 들어가겠지?
-		}
-
-		// 이동 완료 후 같은 칸에 파이어볼 2개 이상인지 검사
-		for (vector<FIREBALL>::iterator iter = fireballs.begin(); iter != fireballs.end(); iter++) {
-			FIREBALL f1 = *iter;
-			if (visit[f1.r][f1.c]) continue;
-			visit[f1.r][f1.c] = true;
-
-			int nm = f1.m, ns = f1.s, is_even = (f1.d%2==0? 1: 0), same_dir = true, n=1;
-
-			for(vector<FIREBALL>::iterator iter2 = iter+1; iter2 != fireballs.end();iter2++){
-				FIREBALL f2 = *iter2;
-				if (f1.r == f2.r && f1.c == f2.c) { // 같은 칸에 있는 파이어볼 모두 찾기
-					nm += f2.m; ns += f2.s; n++;
-					if (is_even && f2.d % 2 != 0) same_dir = false;
-					else if (!is_even && f2.d % 2 == 0) same_dir = false;
+		// 각 파이어볼 이동
+		for (int i = 1; i <= N; i++) {
+			for (int j = 1; j <= N; j++) {
+				for (int k = 0; k < board[i][j].size(); k++) {
+					FB fb = board[i][j][k];
+					int nr = i + dr[fb.d]*fb.s, nc = j + dc[fb.d]*fb.s;
+					while (nr < 1) nr += N; while (nr > N) nr -= N;
+					while (nc < 1) nc += N; while (nc > N) nc -= N;
+					new_board[nr][nc].push_back(FB(fb.m, fb.s, fb.d));
 				}
 			}
-			if (n >= 2) {
-				//cout << f1.r << " " << f1.c << " has fireballs -" << n << endl;
-				ans -= nm; // - sum(m)
-				nm /= 5; ns /= n;
-				int* nds = same_dir ? even_d : odd_d;
-				if (nm == 0) continue;
+		}
+		// copy
+		for (int i = 1; i <= N; i++) {
+			for (int j = 1; j <= N; j++) {
+				board[i][j] = new_board[i][j];
+			}
+		}
+		//print_vector(board, N);
+
+		// 각 칸에 2개 이상 있을 때
+		for (int i = 1; i <= N; i++) {
+			for (int j = 1; j <= N; j++) {
+				int cnt = board[i][j].size();
+				if (cnt < 2) continue;
+
+				int nm = 0, ns = 0;
+				int all_odd = -1 ;
+
+				for (int k = 0; k < cnt; k++) {
+					FB f = board[i][j][k];
+					nm += f.m; ns += f.s;
+					ans -= f.m;
+
+					if (all_odd == -1) all_odd = (f.d % 2); // 홀수면 1, 짝수면 0 저장
+					else if (all_odd == -2) continue; // 이미 different dir
+					else {
+						if (all_odd == 1 && (f.d % 2 == 0))  all_odd = -2;
+						else if (all_odd == 0 && (f.d % 2 != 0)) all_odd = -2;
+					}
+				}
+
+				// board[i][j] 소멸
+				board[i][j].clear();
 				
-				//cout << "4 fireballs split ----\n";
-				// 파이어볼 4개 새로 만들어서 넣어주기
-				for (int f = 0; f < 4; f++) {
-					FIREBALL nf = FIREBALL(f1.r, f1.c, nm, ns, nds[f]);
-					//cout << nf.r << " " << nf.c << " " << nf.m << " " << nf.s << " " << nf.d << endl;
-					nfireballs.push_back(nf);
-					ans += nm;
+				vector<FB> new_fb(4); // 새로운 4개의 파이어볼
+				nm = nm / 5; 
+				if (nm == 0) continue; // 다른 칸
+
+				ans += nm * 4;
+				ns = ns / cnt;
+				int* nd = (all_odd == -2 ? odd_d : even_d);
+
+				for (int i = 0; i < 4; i++) {
+					new_fb[i] = FB(nm, ns, nd[i]);
 				}
-			}
-			else {
-				nfireballs.push_back(f1);
+
+				board[i][j].assign(new_fb.begin(), new_fb.end()); // copy
 			}
 		}
+		 //print_vector(board, N);
 	}
-	ans = 0;
-	for (auto it = nfireballs.begin(); it != nfireballs.end(); it++) {
-		ans += it->m;
-	}
+
 	cout << ans << "\n";
 
 	return 0;

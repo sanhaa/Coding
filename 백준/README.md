@@ -1,5 +1,29 @@
 ### 문제 정리 (최신순) 👀 🕛  ✔️ 
 
+- [x] [ BOJ 20056: 마법사 상어와 파이어볼](https://www.acmicpc.net/problem/20056)
+  <details>
+  <summary>✔️ 🕛=1h ✔️ 8방향과 격자 범위 넘나들기 구현</summary>
+  
+  - 👀 2차원 배열에 vector 넣는 거 구현하기에 나쁘지 않음
+  - 👀 방향이 모두 홀수거나 모두 짝수일 때 = 모두 더해서 짝수가 아닌 경우도 있어서 예제 몇 개 해보길!
+  - 👀 범위 넘나들 때 해결법
+    ```C++
+    // 1. while 이용
+    while (nr < 1) nr += N; 
+    while (nr > N) nr -= N;
+		while (nc < 1) nc += N; 
+    while (nc > N) nc -= N;
+    
+    // 2. % N 이용
+    // (if문 순서 주의) 1부터 인덱스 시작이므로 nr%N 에서 0나오면 다음 if에서 처리해야 함 
+    if(nr > N) nr = nr%N;
+    if(nr < 1) nr = N - abs(nr) % N;
+    if(nc > N) nc = nc%N;
+    if(nc < 1) nc = N - abs(nc) % N;
+    ```
+  
+  </details>
+
 - [x] [BOJ 23291: 어항 정리](https://www.acmicpc.net/problem/23291)
   <details>
   <summary> 🕛=3h ✔️ 🕛=2h 10m ✔️ 긴 구현과 시뮬레이션</summary>

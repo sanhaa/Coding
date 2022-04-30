@@ -73,7 +73,16 @@
     ```
   
   </details>
-
+	  
+- [x] [BOJ 20055: 컨베이어벨트 위의 로봇](https://www.acmicpc.net/problem/20055)
+  <details>
+  <summary> 🕛=20min ✔️ 간단한 시뮬레이션 </summary>
+  
+  - 👀 매번 이동할 때 밀지 말고 올리는 위치, 내리는 위치만 바꿔서 하려고 했는데, 로봇 이동 구현이 어려움...
+  - 👀 N이 더 커지면, 인덱스 조절해서 하는 게 훨씬 빠를텐데
+ 
+  </details>
+	  
 - [x] [BOJ 23291: 어항 정리](https://www.acmicpc.net/problem/23291)
   <details>
   <summary> 🕛=3h ✔️ 🕛=2h 10m ✔️ 긴 구현과 시뮬레이션</summary>

@@ -1,6 +1,6 @@
 ### 문제 정리 (최신순) 👀 🕛  ✔️ 
 
-- [x] [BOJ 21610: 마법사 상어와 비바라기]()
+- [x] [BOJ 21610: 마법사 상어와 비바라기](https://www.acmicpc.net/problem/21610)
 	<details>
 	<summary>🕛=1h ✔️ 8방향 쉬운 구현</summary>
 	
